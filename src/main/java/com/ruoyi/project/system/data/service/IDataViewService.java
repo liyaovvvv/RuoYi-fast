@@ -53,4 +53,8 @@ public interface IDataViewService
     List<JSONObject> getSzJgsxZyfgl();
 
     List<JSONObject> getDsJgsxZyfgl();
+
+    List<JSONObject> getSzJgsxZyfglZq();
+
+    List<JSONObject> getDsJgsxZyfglZq();
 }

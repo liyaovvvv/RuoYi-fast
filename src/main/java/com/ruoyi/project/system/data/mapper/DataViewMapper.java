@@ -21,8 +21,6 @@ public interface DataViewMapper
     @DataSource(DataSourceType.ZQ)
     List<JSONObject> getJCTableInfos();
 
-    @DataSource(DataSourceType.HJ)
-    List<JSONObject> getHJTableInfos();
     /**存在问题*/
     //@DataSource(DataSourceType.SLAVE)
     //List<JSONObject> getZLData(JSONObject tableInfo);
@@ -63,9 +61,6 @@ public interface DataViewMapper
     @DataSource(DataSourceType.BZ)
     List<JSONObject> getZlErrorData(@Param("hjTableName") String hjTableName, @Param("fdTableName") String fdTableName, @Param("fiTableName") String fiTableName);
 
-    @DataSource(DataSourceType.BZ)
-    List<JSONObject> getExistTablesInErrorDB();
-
     List<JSONObject> getDsGjsxTableInfos(String table_schema);
 
     List<JSONObject> getDsGjsxByCity(List<JSONObject> tableInfos);
@@ -76,10 +71,24 @@ public interface DataViewMapper
     @DataSource(DataSourceType.HJ)
     List<JSONObject> getNotExistingItem();
 
-    @DataSource(DataSourceType.HJ)
+    @DataSource(DataSourceType.BZ)
     List<JSONObject> getSzJgsxZyfgl();
 
-    @DataSource(DataSourceType.HJ)
+    @DataSource(DataSourceType.BZ)
     List<JSONObject> getDsJgsxZyfgl();
+
+    @DataSource(DataSourceType.ZQ)
+    List<JSONObject> getSzJgsxZyfglZq();
+
+    @DataSource(DataSourceType.ZQ)
+    List<JSONObject> getDsJgsxZyfglZq();
+
+    @DataSource(DataSourceType.HJ)
+    List<JSONObject> getHJTableInfos();
+
+    @DataSource(DataSourceType.BZ)
+    List<JSONObject> getExistTablesInErrorDB();
+
+
 
 }

@@ -52,6 +52,21 @@ public class DataViewController extends BaseController {
     }
 
 
+    @GetMapping("/dataTableGroupJgsxSzZq")
+    public String dataTableGroupJgsxSzZq()
+    {
+        return prefix + "/dataTableGroupJgsxSzZq";
+    }
+
+    @GetMapping("/dataTableGroupJgsxDsZq")
+    public String dataTableGroupJgsxDsZq()
+    {
+        return prefix + "/dataTableGroupJgsxDsZq";
+    }
+
+
+
+
     @GetMapping("/dataTableGroupDs")
     public String dataTableGroupDs()
     {
@@ -283,7 +298,7 @@ public class DataViewController extends BaseController {
     }
 
     /**
-     * 获取 监管事项覆盖率 上报及时率
+     * 获取 监管事项覆盖率（标准库） 上报及时率
      * @param accountRecode
      * @return
      */
@@ -309,7 +324,7 @@ public class DataViewController extends BaseController {
     }
 
     /**
-     * 获取 监管事项覆盖率 上报及时率
+     * 获取 监管事项覆盖率（标准库） 上报及时率
      * @param accountRecode
      * @return
      */
@@ -331,6 +346,59 @@ public class DataViewController extends BaseController {
             return tableDataInfo;
         }*/
         List<JSONObject> list = dataViewService.getDsJgsxZyfgl();
+        return getDataTable(list);
+    }
+
+
+    /**
+     * 获取 监管事项覆盖率（正确库） 上报及时率
+     * @param accountRecode
+     * @return
+     */
+    @PostMapping("/getJgsxSzTableGroupDataZq")
+    @ResponseBody
+    public TableDataInfo getJgsxSzTableGroupDataZq(AccountRecode accountRecode)
+    {
+        //如果是查询历史数据
+/*        if (accountRecode.getRemark().equals("history")){
+            if (accountRecode.getCreateTime() == null){
+                accountRecode.setCreateTime(new Date());
+            }
+            List<AccountRecode> recodes = accountRecodeService.selectAccountRecodeList(accountRecode);
+            TableDataInfo tableDataInfo = new TableDataInfo();
+            if (recodes != null && recodes.size() > 0){
+                JSONArray list = JSONArray.parseArray(recodes.get(0).getData());
+                tableDataInfo = getDataTable(list);
+            }
+            return tableDataInfo;
+        }*/
+        List<JSONObject> list = dataViewService.getSzJgsxZyfglZq();
+        return getDataTable(list);
+    }
+
+    /**
+     * 获取 监管事项覆盖率（正确库） 上报及时率
+     * @param accountRecode
+     * @return
+     */
+    @PostMapping("/getJgsxDsTableGroupDataZq")
+    @ResponseBody
+    public TableDataInfo getJgsxDsTableGroupDataZq(AccountRecode accountRecode)
+    {
+        //如果是查询历史数据
+/*        if (accountRecode.getRemark().equals("history")){
+            if (accountRecode.getCreateTime() == null){
+                accountRecode.setCreateTime(new Date());
+            }
+            List<AccountRecode> recodes = accountRecodeService.selectAccountRecodeList(accountRecode);
+            TableDataInfo tableDataInfo = new TableDataInfo();
+            if (recodes != null && recodes.size() > 0){
+                JSONArray list = JSONArray.parseArray(recodes.get(0).getData());
+                tableDataInfo = getDataTable(list);
+            }
+            return tableDataInfo;
+        }*/
+        List<JSONObject> list = dataViewService.getDsJgsxZyfglZq();
         return getDataTable(list);
     }
 

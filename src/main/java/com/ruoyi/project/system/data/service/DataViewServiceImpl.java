@@ -306,6 +306,26 @@ public class DataViewServiceImpl implements IDataViewService {
     }
 
     @Override
+    @Transient
+    public List<JSONObject> getSzJgsxZyfglZq(){
+        //查询查基础库 省直
+        List<JSONObject> qzTableInfos = dataViewMapper.getSzJgsxZyfglZq();
+        // List<Map<String, Object>> array = dataProcessing(qzTableInfos,"jg_");
+        deleteAndInsert(qzTableInfos,"省直覆盖率统计",8L);
+        return qzTableInfos;
+    }
+
+    @Override
+    @Transient
+    public List<JSONObject> getDsJgsxZyfglZq(){
+        //查询基础库 地市
+        List<JSONObject> qzTableInfos = dataViewMapper.getDsJgsxZyfglZq();
+        //  List<Map<String, Object>> array = dataProcessing(qzTableInfos,"jg_");
+        deleteAndInsert(qzTableInfos,"地市覆盖率表统计",9L);
+        return qzTableInfos;
+    }
+
+    @Override
     public List<JSONObject> getQzColumnsError() {
         List<JSONObject> qzErrorColumns = dataViewMapper.getQzColumnsError();
         return qzErrorColumns;
@@ -320,6 +340,28 @@ public class DataViewServiceImpl implements IDataViewService {
         }
         return list;
     }
+
+ /*   @Override
+    public List<JSONObject> getZlErrorData(){
+        List<JSONObject> data = new ArrayList<>();
+        List<JSONObject> tableInfos = dataViewMapper.getJCTableInfos();
+        List<JSONObject> areas = getSourceName();
+        for (JSONObject tableInfo : tableInfos){
+            if(!tableInfo.getString("table_name").contains("jg_jgsx_")){//不统计监管事项
+                List<JSONObject> list = dataViewMapper.getZlErrorData(tableInfo);
+                for (JSONObject area : areas){
+                    for (JSONObject json : list){
+                        if (area.getString("CD_HB_SOURCE").equalsIgnoreCase(json.getString("CD_HB_SOURCE"))){
+                            json.put("org_name",area.getString("ORG_NAME"));
+                        }
+                    }
+                }
+                data.addAll(list);
+            }
+        }
+        deleteAndInsert(data,"错误数据统计",4L);
+        return data;
+    }*/
 
     @Override
     public List<JSONObject> getZlErrorData(){
@@ -348,6 +390,7 @@ public class DataViewServiceImpl implements IDataViewService {
         deleteAndInsert(data,"错误数据统计",4L);
         return data;
     }
+
 
     private void doZlErrorDataQuery(List<JSONObject> data, List<JSONObject> areas, Map<String, String> falseFdTableMap, Map<String, String> falseFiTableMap) {
         for(String tableName : falseFdTableMap.keySet()){
@@ -385,6 +428,8 @@ public class DataViewServiceImpl implements IDataViewService {
             }
         }
     }
+
+
 
     @Override
     public List<JSONObject> compareQzAndHj(){
@@ -487,13 +532,7 @@ public class DataViewServiceImpl implements IDataViewService {
         AccountRecode recode = new AccountRecode();
         recode.setType(type);
         recode.setCreateTime(new Date());
-        List<AccountRecode> recodes = null;
-        try {
-            recodes = accountRecodeMapper.selectAccountRecodeList(recode);
-        } catch (Exception e) {
-            log.error("Error with: " + e.getMessage() + " -- " + e.getCause().getMessage());
-        }
-
+        List<AccountRecode> recodes = accountRecodeMapper.selectAccountRecodeList(recode);
         if (recodes != null && recodes.size() > 0){
             String[] ids = new String[recodes.size()];
             for (int i=0;i<recodes.size();i++){
@@ -597,36 +636,80 @@ public class DataViewServiceImpl implements IDataViewService {
         title2.put("align","center");
         title2.put("width",150);
         list.add(title2);
+
         Map<String,Object> title3 = new LinkedHashMap<>();
-        title3.put("field","fgl_fm");
-        title3.put("title","监管事项主项总数(市级)(覆盖率分母)");
+        title3.put("field","zrr_fz");
+        title3.put("title","自然人分子");
         title3.put("align","center");
         title3.put("width",150);
         list.add(title3);
         Map<String,Object> title4 = new LinkedHashMap<>();
-        title4.put("field","fgl_qx_fm");
-        title4.put("title","监管事项主项总数(县/区)(覆盖率分母)");
+        title4.put("field","fr_fz");
+        title4.put("title","法人分子");
         title4.put("align","center");
         title4.put("width",150);
         list.add(title4);
+
+
         Map<String,Object> title5 = new LinkedHashMap<>();
-        title5.put("field","city_fgl");
-        title5.put("title"," 监管行为涉及的监管事项主项覆盖率(市级)(不含采集系统)");
+        title5.put("field","fgl_fm");
+        title5.put("title","监管事项主项总数(市级)(覆盖率分母)");
         title5.put("align","center");
         title5.put("width",150);
         list.add(title5);
         Map<String,Object> title6 = new LinkedHashMap<>();
-        title6.put("field","county_fgl");
-        title6.put("title"," 监管行为涉及的监管事项主项覆盖率(县/区级平均)(不含采集系统)");
+        title6.put("field","fgl_qx_fm");
+        title6.put("title","监管事项主项总数(县/区)(覆盖率分母)");
         title6.put("align","center");
         title6.put("width",150);
         list.add(title6);
+
         Map<String,Object> title7 = new LinkedHashMap<>();
-        title7.put("field","sbjsl");
-        title7.put("title","监管业务数据上报及时率");
+        title7.put("field","zrr_fm");
+        title7.put("title","自然人分母");
         title7.put("align","center");
         title7.put("width",150);
         list.add(title7);
+        Map<String,Object> title8 = new LinkedHashMap<>();
+        title8.put("field","fr_fm");
+        title8.put("title","法人分母");
+        title8.put("align","center");
+        title8.put("width",150);
+        list.add(title8);
+
+        Map<String,Object> title9 = new LinkedHashMap<>();
+        title9.put("field","city_fgl");
+        title9.put("title"," 监管行为涉及的监管事项主项覆盖率(市级)(不含采集系统)");
+        title9.put("align","center");
+        title9.put("width",150);
+        list.add(title9);
+        Map<String,Object> title10 = new LinkedHashMap<>();
+        title10.put("field","county_fgl");
+        title10.put("title"," 监管行为涉及的监管事项主项覆盖率(县/区级平均)(不含采集系统)");
+        title10.put("align","center");
+        title10.put("width",150);
+        list.add(title10);
+
+        Map<String,Object> title11 = new LinkedHashMap<>();
+        title11.put("field","zrr_fgl");
+        title11.put("title"," 自然人覆盖率");
+        title11.put("align","center");
+        title11.put("width",150);
+        list.add(title11);
+        Map<String,Object> title12 = new LinkedHashMap<>();
+        title12.put("field","fr_fgl");
+        title12.put("title"," 法人覆盖率");
+        title12.put("align","center");
+        title12.put("width",150);
+        list.add(title12);
+
+
+        Map<String,Object> title13 = new LinkedHashMap<>();
+        title13.put("field","sbjsl");
+        title13.put("title","监管业务数据上报及时率");
+        title13.put("align","center");
+        title13.put("width",150);
+        list.add(title13);
         return list;
     }
 }
