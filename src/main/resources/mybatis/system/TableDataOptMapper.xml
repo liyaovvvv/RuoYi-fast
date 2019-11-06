@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.opt.mapper.TableDataOptMapper">
+    
+    <resultMap type="TableDataOpt" id="TableDataOptResult">
+        <result property="id"    column="id"    />
+        <result property="optName"    column="opt_name"    />
+        <result property="optInfo"    column="opt_info"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updataTime"    column="updata_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTableDataOptVo">
+        select id, opt_name, opt_info, create_by, create_time, update_by, updata_time, remark from sys_table_data_opt
+    </sql>
+
+    <select id="selectTableDataOptList" parameterType="TableDataOpt" resultMap="TableDataOptResult">
+        <include refid="selectTableDataOptVo"/>
+        <where>  
+            <if test="optName != null  and optName != ''"> and opt_name like concat('%', #{optName}, '%')</if>
+            <if test="updataTime != null "> and updata_time = #{updataTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectTableDataOptById" parameterType="Long" resultMap="TableDataOptResult">
+        <include refid="selectTableDataOptVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTableDataOpt" parameterType="TableDataOpt" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_table_data_opt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="optName != null  and optName != ''">opt_name,</if>
+            <if test="optInfo != null  and optInfo != ''">opt_info,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updataTime != null ">updata_time,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="optName != null  and optName != ''">#{optName},</if>
+            <if test="optInfo != null  and optInfo != ''">#{optInfo},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updataTime != null ">#{updataTime},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTableDataOpt" parameterType="TableDataOpt">
+        update sys_table_data_opt
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="optName != null  and optName != ''">opt_name = #{optName},</if>
+            <if test="optInfo != null  and optInfo != ''">opt_info = #{optInfo},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updataTime != null ">updata_time = #{updataTime},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTableDataOptById" parameterType="Long">
+        delete from sys_table_data_opt where id = #{id}
+    </delete>
+
+    <delete id="deleteTableDataOptByIds" parameterType="String">
+        delete from sys_table_data_opt where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

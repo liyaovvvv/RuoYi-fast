@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <th:block th:include="include :: header('数据统计中心台')" />
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeIn">
+
+    <div class="row" style="margin-top: 200px">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <a href="/data/dataQzView" target="_blank">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        地市入前置库数据统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>统计地市数据入前置库情况，按表统计</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="/data/dataSzView" target="_blank">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        省直入前置库数据统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>统计省直数据入前置库情况，按表统计</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="/data/dataZlDetail" target="_blank">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        数据治理明细统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>统计各个省直，地市的各类表，统计内容包含：前置数据入库量、汇聚入库数据量、治理正确数据量、治理错误数据量</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <a href="/data/dataTableGroupDs" target="_blank">
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        地市分类数据统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>主要统计地市几个分类的数据情况，包含：监管行为、投诉举报、双随机、监管对象、执法人员、其他</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="/data/dataTableGroupSz" target="_blank">
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        省直分类数据统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>主要统计省直几个分类的数据情况，包含：监管行为、投诉举报、双随机、监管对象、执法人员、其他</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="/data/dataQzColumnsError" target="_blank">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">
+                                        前置库字段不符要求统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>统计前置库各个地市表字段长度和字段类型不符合要求情况</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <a href="/data/dataQzColumnsRequired" target="_blank">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">
+                                        前置库缺少必需字段统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>统计前置库各个地市7个必需字段缺少的情况</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="/data/dataZlError" target="_blank">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">
+                                        错误数据统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>统计错误数据情况</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="/data/dataJGSX" target="_blank">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-info-circle"></i> 地市监管事项统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>统计各个地市的监管事项情况</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <a href="/data/dataQzAndHjView" target="_blank">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-warning"></i> 前置库和汇集base库数据比较
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>前置库和汇集base库数据比较</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="/data/existingItemView" target="_blank">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-info-circle"></i> 已存在监管事项
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>统计已存在的监管事项情况</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="/data/notExistingItemView" target="_blank">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-info-circle"></i> 未存在监管事项
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>统计未存在的监管事项情况</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <a href="/data/dataTableGroupJgsxSz" target="_blank">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-info-circle"></i> 监管事项 省直 统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>1.主项覆盖率：分母数据事项数据大于十月一日数据/分母常量
+                                            2.监管业务数据上报：条数÷ sum每条（(上报时间-入库时间+1)
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <a href="/data/dataTableGroupJgsxDs" target="_blank">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-info-circle"></i> 监管事项 地市 统计
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>1.主项覆盖率：分母数据事项数据大于十月一日数据/分母常量
+                                            2.监管业务数据上报：条数÷ sum每条（(上报时间-入库时间+1)
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+
+        </div>
+    </div>
+
+</div>
+<th:block th:include="include :: footer" />
+</body>
+</html>

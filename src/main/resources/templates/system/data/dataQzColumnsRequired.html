@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('前置缺少必需字段统计')" />
+	<th:block th:include="include :: layout-latest-css" />
+	<th:block th:include="include :: ztree-css" />
+</head>
+<body class="gray-bg">
+	<div class="ui-layout-center">
+		<div class="container-div">
+			<div class="row">
+		        <div class="col-sm-12  select-table table-bordered">
+				    <table id="bootstrap-table" data-mobile-responsive="true"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: layout-latest-js" />
+	<script th:inline="javascript">
+		var prefix = ctx + "data";
+        var columns = [
+			{
+				field: 'ORG_NAME',
+				title: '名称',
+				align:'center'
+			},{
+				field: 'TABLE_SCHEMA',
+				title: '库名',
+				align:'left'
+			},{
+				field: 'TABLE_NAME',
+				title: '表名',
+				align:'left'
+			},{
+				field: 'lack_field',
+				title: '缺少字段',
+				align:'left'
+			}
+		];
+
+		$(function() {
+		    var panehHidden = false;
+		    if ($(this).width() < 769) {
+		        panehHidden = true;
+		    }
+		    $('body').layout({ initClosed: panehHidden, west__size: 185 });
+			queryUserList();
+
+		});
+
+		function queryUserList() {
+		    var options = {
+		    	url:"/data/accountQzColumnsRequired",
+		        sortName: "createTime",
+		        sortOrder: "desc",
+		        modalName: "用户",
+		        columns: columns,
+				height:'800',
+				striped:true,
+				pagination:false,
+				fixedColumns:true,
+				fixedNumber:1,
+				exportTypes:['json', 'xml', 'csv', 'txt', 'sql', 'excel'],
+				showExport:true,
+				showToggle:false,
+				showRefresh:false,
+				showSearch:false,
+				exportOptions: {
+					fileName: '前置缺少必需字段统计'
+				}
+		    };
+		    $.table.init(options);
+		}
+
+	</script>
+</body>
+<style>
+	.th-inner{
+		padding: 8px;
+		line-height: 24px;
+		vertical-align: top;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100px;
+	}
+</style>
+</html>

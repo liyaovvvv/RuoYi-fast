@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('已存在监管事项')" />
+	<th:block th:include="include :: layout-latest-css" />
+	<th:block th:include="include :: ztree-css" />
+</head>
+<body class="gray-bg">
+	<div class="ui-layout-center">
+		<div class="container-div">
+			<div class="row">
+		        <div class="col-sm-12  select-table table-bordered">
+				    <table id="bootstrap-table" data-mobile-responsive="true"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: layout-latest-js" />
+	<script th:inline="javascript">
+		var prefix = ctx + "data";
+        var columns = [
+			{
+				field: 'name',
+				title: '名称',
+				align:'center'
+			},{
+				field: 'bm',
+				title: '事项编码',
+				align:'left'
+			},{
+				field: 'sx',
+				title: '事项名称',
+				align:'left'
+			},{
+				field: 'orgname',
+				title: '提供方',
+				align:'left'
+			}
+		];
+
+		$(function() {
+		    var panehHidden = false;
+		    if ($(this).width() < 769) {
+		        panehHidden = true;
+		    }
+		    $('body').layout({ initClosed: panehHidden, west__size: 185 });
+			queryUserList();
+
+		});
+
+		function queryUserList() {
+		    var options = {
+		    	url:"/data/getNotExistingItem",
+		        modalName: "用户",
+		        columns: columns,
+				height:'800',
+				striped:true,
+				pagination:false,
+				fixedColumns:true,
+				fixedNumber:1,
+				exportTypes:['json', 'xml', 'csv', 'txt', 'sql', 'excel'],
+				showExport:true,
+				showToggle:false,
+				showRefresh:false,
+				showSearch:false,
+				pagination: true,//是否开启分页（*）
+				pageNumber:1,//初始化加载第一页，默认第一页
+				pageSize: 5000,//每页的记录行数（*）
+				pageList: [50,100,200],//可供选择的每页的行数（*）
+				sidePagination: "client", //分页方式：client客户端分页，server服务端分页（*）
+				exportOptions: {
+					fileName: '已存在监管事项'
+				}
+		    };
+		    $.table.init(options);
+		}
+
+	</script>
+</body>
+</html>

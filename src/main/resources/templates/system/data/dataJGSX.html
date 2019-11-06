@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('前置库地市数据量')" />
+	<th:block th:include="include :: layout-latest-css" />
+	<th:block th:include="include :: ztree-css" />
+</head>
+<body class="gray-bg">
+	<div class="ui-layout-center">
+		<div class="container-div">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="tabs-container" style="margin-top: 15px;">
+						<ul class="nav nav-tabs" id="nav-tabs">
+						</ul>
+						<div class="tab-content" id="tab-content">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: layout-latest-js" />
+	<script th:inline="javascript">
+		var prefix = ctx + "data";
+        var columns = [
+			{
+				field: 'SUPERVISE_ITEM_CODE',
+				title: '编码'
+			},{
+				field: 'DEPARTMENT_NAME',
+				title: '机构名称',
+				align:'left'
+			},{
+				field: 'MATTER_NAME',
+				title: '事项名称',
+				align:'left'
+			},{
+				field: 'num',
+				title: '数量',
+				align:'left'
+			}
+		];
+
+		$(function() {
+		    var panehHidden = false;
+		    if ($(this).width() < 769) {
+		        panehHidden = true;
+		    }
+		    $('body').layout({ initClosed: panehHidden, west__size: 185 });
+			getCity();
+
+		});
+
+		function getCity() {
+			$.ajax({
+				cache : true,
+				type : "POST",
+				url : ctx + "data/getQzCity",
+				data : {
+
+				},
+				async : true,
+				error : function(request) {
+					$.modal.alertError("系统错误");
+				},
+				success : function(data) {
+					createTab(data)
+				}
+			});
+		}
+
+		function createTab(data) {
+			var html_tab = "";
+			var html_content = "";
+			$(data).each(function (index,value) {
+				if (index == 0){
+					html_tab += '<li class="active"><a data-toggle="tab" href="#tab-0" aria-expanded="true">'+value.ORG_NAME+'</a></li>';
+					html_content += '<div id="tab-0" class="tab-pane active">\n' +
+							'\t\t\t\t\t\t\t\t\t<div class="panel-body">\n' +
+							'\t\t\t\t\t\t\t\t\t\t<table id="bootstrap-table-0" data-mobile-responsive="true"></table>\n' +
+							'\t\t\t\t\t\t\t\t\t</div>\n' +
+							'\t\t\t\t\t\t\t\t</div>';
+				}else {
+					html_tab += '<li class=""><a data-toggle="tab" href="#tab-'+index+'" aria-expanded="false">'+value.ORG_NAME+'</a></li>';
+					html_content += '<div id="tab-'+index+'" class="tab-pane">\n' +
+							'\t\t\t\t\t\t\t\t\t<div class="panel-body">\n' +
+							'\t\t\t\t\t\t\t\t\t\t<table id="bootstrap-table-'+index+'" data-mobile-responsive="true"></table>\n' +
+							'\t\t\t\t\t\t\t\t\t</div>\n' +
+							'\t\t\t\t\t\t\t\t</div>';
+				}
+			})
+			$('#nav-tabs').html(html_tab);
+			$('#tab-content').html(html_content);
+
+			$(data).each(function (index,value) {
+				var options = {
+					url:"/data/getDsGjsxByCity",
+					modalName: value.ORG_NAME,
+					method:'GET',
+					columns: columns,
+					height:'800',
+					striped:true,
+					pagination:false,
+					exportTypes:['json', 'xml', 'csv', 'txt', 'sql', 'excel'],
+					showExport:true,
+					showToggle:false,
+					showRefresh:false,
+					showSearch:false,
+					exportOptions: {
+						fileName: value.ORG_NAME
+					},
+					queryParams:{
+						table_schema:value.database_name
+					}
+				};
+				$('#bootstrap-table-'+index).bootstrapTable(options);
+			})
+		}
+
+	</script>
+</body>
+<style>
+	.th-inner{
+		padding: 8px;
+		line-height: 24px;
+		vertical-align: top;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100px;
+	}
+</style>
+</html>
