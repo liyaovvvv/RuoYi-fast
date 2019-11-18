@@ -413,7 +413,7 @@ public class DataViewServiceImpl implements IDataViewService {
         for(JSONObject table : existTableList){
             String existTableName = table.getString("table_name");
             //1. 判断错误库已有表中是否有汇聚库源表
-            if(existTableName.contains(tableName) && existTableName.contains(tag)){
+            if(existTableName.startsWith(tableName) && existTableName.contains(tag)){
                 //2. 如果包含，放到map中
                 if(tableNameMap.get(tableName) == null){
                     tableNameMap.put(tableName, existTableName);
