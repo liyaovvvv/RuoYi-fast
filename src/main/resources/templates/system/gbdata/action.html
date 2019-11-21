@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('【请填写功能名称】列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li class="select-time">
+                                <p>${comment}：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginEndDate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endEndDate]"/>
+                            </li>
+                            <li class="select-time">
+                                <p>${comment}：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginSubmittedDate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endSubmittedDate]"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <select name="forceExecutionType" th:with="type=${@dict.getType('')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <select name="forceType" th:with="type=${@dict.getType('')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="checkActionCode"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="illegalFact"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="cdIdBef"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="areaNumber"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="implementInstitutionCode"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="mandatoryBasis"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="cdSource"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <select name="administrativeCpCeType" th:with="type=${@dict.getType('')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="cdId"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <select name="coerciveMeasureType" th:with="type=${@dict.getType('')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="forceExtendDate"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <select name="lyType" th:with="type=${@dict.getType('')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="submittedPersonnel"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="administrativeCpNa"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="forceActionCode"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="recordUniqueIdentity"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="administrativeCpUiCode"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="cdOperation"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="cdBatch"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="implementInstitution"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="mandatoryDecisionPatify"/>
+                            </li>
+                            <li class="select-time">
+                                <p>${comment}：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCdTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCdTime]"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="mandatoryDecisionNumber"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="superviseItemCode"/>
+                            </li>
+                            <li class="select-time">
+                                <p>${comment}：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginMandatoryDecisionSevDate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endMandatoryDecisionSevDate]"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="cdLsh"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="cdLshSrc"/>
+                            </li>
+                            <li>
+                                <p>${comment}：</p>
+                                <input type="text" name="cdHbSource"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:action:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:action:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:action:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:action:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table" data-mobile-responsive="true"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:action:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:action:remove')}]];
+        var prefix = ctx + "system/action";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "【请填写功能名称】",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'id', 
+                    title : '${comment}',
+                    visible: false
+                },
+                {
+                    field : 'endDate', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'submittedDate', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'forceExecutionType', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'forceType', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'checkActionCode', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'forceActionName', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'addressRegistered', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'illegalFact', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'cdIdBef', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'areaNumber', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'implementInstitutionCode', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'mandatoryBasis', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'cdSource', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'administrativeCpCeType', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'cdId', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'coerciveMeasureType', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'forceExtendDate', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'addressOperating', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'lyType', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'submittedPersonnel', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'administrativeCpNa', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'forceActionCode', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'recordUniqueIdentity', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'administrativeCpUiCode', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'superviseObject', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'cdOperation', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'cdBatch', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'implementInstitution', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'mandatoryDecisionPatify', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'cdTime', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'mandatoryDecisionNumber', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'superviseItemCode', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'mandatoryDecisionSevDate', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'administrativeCp', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'cdLsh', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'cdLshSrc', 
+                    title : '${comment}'
+                },
+                {
+                    field : 'cdHbSource', 
+                    title : '${comment}'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
