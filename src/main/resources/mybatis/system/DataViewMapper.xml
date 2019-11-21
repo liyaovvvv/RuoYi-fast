@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.system.data.mapper.DataViewMapper">
 
-	<select id="getDsTableInfos" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getDsTableInfos" resultType="com.alibaba.fastjson.JSONObject">
 		select org.ORG_NAME org_name,a.table_schema,a.table_name ,a.table_comment,org.CD_HB_SOURCE
 		from information_schema.tables a
 		left join test.t_org_code org on a.TABLE_SCHEMA = org.database_name
 		where a.table_schema like 'ds\_%' and a.TABLE_NAME != 'zlxt_error_msg' and a.TABLE_NAME not like '%\_copy'
 	</select>
 
-	<select id="getSzTableInfos" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getSzTableInfos" resultType="com.alibaba.fastjson.JSONObject">
 		select org.ORG_NAME org_name,a.table_schema,a.table_name ,a.table_comment,org.CD_HB_SOURCE
 		from information_schema.tables a
 		left join test.t_org_code org on a.TABLE_SCHEMA = org.database_name
@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and a.table_name not in('item_change','jg_ry','jg_jzgd','shijian_tyshxydm') ORDER BY  org.`ID`
 	</select>
 
-	<select id="getJCTableInfos" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getJCTableInfos" resultType="com.alibaba.fastjson.JSONObject">
 		select a.table_schema,a.table_name ,a.table_comment
 		from information_schema.tables a
 		where a.table_schema = 'hbjg_jc_all'
@@ -29,38 +29,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and a.TABLE_NAME != 't_org_code' and a.TABLE_NAME != 'table_jgsx'
 	</select>
 
-	<!--<select id="getZLData" resultType="com.alibaba.fastjson.JSONObject">
-		select A.CD_HB_SOURCE,
-		A.zlCount,B.zqCount, CASE WHEN B.zqCount>0 THEN A.zlCount-B.zqCount ELSE A.zlCount END cwCount
-		FROM
- 		(SELECT COUNT(*) zlCount,CD_HB_SOURCE FROM  `hbjg_hj_all`.${table_name} GROUP BY CD_HB_SOURCE)A LEFT JOIN
- 		(SELECT COUNT(*) zqCount,CD_HB_SOURCE FROM `hbjg_jc_all`.${table_name} GROUP BY CD_HB_SOURCE)B
-		ON  A.CD_HB_SOURCE = B.CD_HB_SOURCE
-	</select>-->
+    <!--<select id="getZLData" resultType="com.alibaba.fastjson.JSONObject">
+        select A.CD_HB_SOURCE,
+        A.zlCount,B.zqCount, CASE WHEN B.zqCount>0 THEN A.zlCount-B.zqCount ELSE A.zlCount END cwCount
+        FROM
+         (SELECT COUNT(*) zlCount,CD_HB_SOURCE FROM  `hbjg_hj_all`.${table_name} GROUP BY CD_HB_SOURCE)A LEFT JOIN
+         (SELECT COUNT(*) zqCount,CD_HB_SOURCE FROM `hbjg_jc_all`.${table_name} GROUP BY CD_HB_SOURCE)B
+        ON  A.CD_HB_SOURCE = B.CD_HB_SOURCE
+    </select>-->
 
-	<select id="getBZData" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getBZData" resultType="com.alibaba.fastjson.JSONObject">
 		SELECT COUNT(*) zlCount,CD_HB_SOURCE FROM  `hbjg_hj_all`.${table_name} GROUP BY CD_HB_SOURCE
 	</select>
 
-	<select id="getZQData" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getZQData" resultType="com.alibaba.fastjson.JSONObject">
 		SELECT COUNT(*) zqCount,CD_HB_SOURCE FROM `hbjg_jc_all`.${table_name} GROUP BY CD_HB_SOURCE
 	</select>
 
 
 
-	<select id="getQZTableData" resultType="java.lang.Long">
+    <select id="getQZTableData" resultType="java.lang.Long">
 		SELECT COUNT(*) qzCount FROM  ${table_schema}.${table_name}
 	</select>
 
-	<select id="getHjTableData" resultType="java.lang.Long">
+    <select id="getHjTableData" resultType="java.lang.Long">
 		SELECT COUNT(*) qzCount FROM  ${table_name} where CD_HB_SOURCE = #{CD_HB_SOURCE}
 	</select>
 
-	<select id="getSourceName" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getSourceName" resultType="com.alibaba.fastjson.JSONObject">
 		SELECT * FROM  test.t_org_code order by id
 	</select>
 
-	<select id="accountQzColumnsRequired" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="accountQzColumnsRequired" resultType="com.alibaba.fastjson.JSONObject">
 		<![CDATA[
 			select org.ORG_NAME,t.TABLE_SCHEMA,t.TABLE_NAME,c.COLUMN_NAME
              from (
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 
-	<select id="getQzColumnsError" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getQzColumnsError" resultType="com.alibaba.fastjson.JSONObject">
 		<![CDATA[
 			select org.org_name,tt.*,
 			case when qz_field_long > bz_field_long and qz_field_type != bz_field_type then '字段长度设置过长、字段类型不符合要求'
@@ -98,48 +98,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 
-	<select id="getDataByCity" resultType="java.lang.Long" parameterType="java.util.List">
-		select sum(t.num) num from
-		<foreach item="item" index="index" collection="list" separator="union all" open="(" close=")t">
-			select count(1) num from ${item.databaseName}.${item.tableName}
-		</foreach>
-	</select>
+    <select id="getDataByCity" resultType="java.lang.Long" parameterType="java.util.List">
+        select sum(t.num) num from
+        <foreach item="item" index="index" collection="list" separator="union all" open="(" close=")t">
+            select count(1) num from ${item.databaseName}.${item.tableName}
+        </foreach>
+    </select>
 
-	<!--<select id="getDataByHJ" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.util.List">
-		select sum(t.zlCount) zlCount,sum(t.zqCount) zqCount,sum(t.cwCount) cwCount from
-		<foreach item="item" index="index" collection="list" separator="union all" open="(" close=")t">
-			select
-			A.zlCount,B.zqCount, CASE WHEN B.zqCount>0 THEN A.zlCount-B.zqCount ELSE A.zlCount END cwCount
-			FROM
-			(SELECT COUNT(*) zlCount,CD_HB_SOURCE FROM  `hbjg_hj_all`.${item.tableName} where CD_HB_SOURCE = #{item.cdHbSource})A LEFT JOIN
-			(SELECT COUNT(*) zqCount,CD_HB_SOURCE FROM `hbjg_jc_all`.${item.tableName} where CD_HB_SOURCE = #{item.cdHbSource})B
-			ON  A.CD_HB_SOURCE = B.CD_HB_SOURCE
-		</foreach>
-	</select>-->
+    <!--<select id="getDataByHJ" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.util.List">
+        select sum(t.zlCount) zlCount,sum(t.zqCount) zqCount,sum(t.cwCount) cwCount from
+        <foreach item="item" index="index" collection="list" separator="union all" open="(" close=")t">
+            select
+            A.zlCount,B.zqCount, CASE WHEN B.zqCount>0 THEN A.zlCount-B.zqCount ELSE A.zlCount END cwCount
+            FROM
+            (SELECT COUNT(*) zlCount,CD_HB_SOURCE FROM  `hbjg_hj_all`.${item.tableName} where CD_HB_SOURCE = #{item.cdHbSource})A LEFT JOIN
+            (SELECT COUNT(*) zqCount,CD_HB_SOURCE FROM `hbjg_jc_all`.${item.tableName} where CD_HB_SOURCE = #{item.cdHbSource})B
+            ON  A.CD_HB_SOURCE = B.CD_HB_SOURCE
+        </foreach>
+    </select>-->
 
-	<select id="getDataByHJ" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.util.List">
-		select sum(t.zlCount) zlCount from
-		<foreach item="item" index="index" collection="list" separator="union all" open="(" close=")t">
-			SELECT COUNT(*) zlCount FROM  `hbjg_hj_all`.${item.tableName} where CD_HB_SOURCE = #{item.cdHbSource}
-		</foreach>
-	</select>
+    <select id="getDataByHJ" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.util.List">
+        select sum(t.zlCount) zlCount from
+        <foreach item="item" index="index" collection="list" separator="union all" open="(" close=")t">
+            SELECT COUNT(*) zlCount FROM  `hbjg_hj_all`.${item.tableName} where CD_HB_SOURCE = #{item.cdHbSource}
+        </foreach>
+    </select>
 
-	<select id="getDataByJC" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.util.List">
-		select sum(t.zqCount) zqCount from
-		<foreach item="item" index="index" collection="list" separator="union all" open="(" close=")t">
-			SELECT COUNT(*) zqCount FROM `hbjg_jc_all`.${item.tableName} where CD_HB_SOURCE = #{item.cdHbSource}
-		</foreach>
-	</select>
+    <select id="getDataByJC" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.util.List">
+        select sum(t.zqCount) zqCount from
+        <foreach item="item" index="index" collection="list" separator="union all" open="(" close=")t">
+            SELECT COUNT(*) zqCount FROM `hbjg_jc_all`.${item.tableName} where CD_HB_SOURCE = #{item.cdHbSource}
+        </foreach>
+    </select>
 
 
-	<select id="getDsGjsxTableInfos" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getDsGjsxTableInfos" resultType="com.alibaba.fastjson.JSONObject">
 		select a.table_schema,a.table_name ,a.table_comment
 		from information_schema.tables a
 		where a.table_schema = #{value} and a.table_name
 		in ('jg_jgxw_check_action','jg_jgxw_punish_action','jg_jgxw_force_action','jg_jgxw_other_action')
 	</select>
 
-	<select id="getExistingItem" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getExistingItem" resultType="com.alibaba.fastjson.JSONObject">
 		select aa.ORG_NAME, tt.SUPERVISE_ITEM_CODE, tt.MATTER_NAME, tt.DEPARTMENT_NAME, tt.num
 	from (
 			 select a.SUPERVISE_ITEM_CODE, b.DEPARTMENT_NAME, b.MATTER_NAME, a.num, b.DEPARTMENT_ID, a.CD_HB_SOURCE
@@ -185,7 +185,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 left join t_org_code aa on tt.CD_HB_SOURCE = aa.CD_HB_SOURCE
 	</select>
 
-	<select id="getNotExistingItem" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getNotExistingItem" resultType="com.alibaba.fastjson.JSONObject">
 		select *
 			from (
 					 select a.name, a.bm, a.sx, a.org_name orgname
@@ -265,27 +265,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			order by mm.name
 	</select>
 
-	<select id="getDsGjsxByCity" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.util.List">
-		select t.* from
-		<foreach item="item" index="index" collection="list" separator="union all" open="(" close=")">
-			select a.SUPERVISE_ITEM_CODE,b.DEPARTMENT_NAME,b.MATTER_NAME,a.num from
-			(select count(1) num,
-			<if test="item.table_name == 'jg_jgxw_check_action'.toString()">SUPERVISE_ITEM_IMPLEMENT_CODE</if> SUPERVISE_ITEM_CODE,
-			left(
-			<if test="item.table_name == 'jg_jgxw_check_action'.toString()">SUPERVISE_ITEM_IMPLEMENT_CODE</if>
-			<if test="item.table_name != 'jg_jgxw_check_action'.toString()">SUPERVISE_ITEM_CODE</if>,8) code
-			from ${item.table_schema}.${item.table_name}  group by
-			<if test="item.table_name == 'jg_jgxw_check_action'.toString()">SUPERVISE_ITEM_IMPLEMENT_CODE</if>
-			<if test="item.table_name != 'jg_jgxw_check_action'.toString()">SUPERVISE_ITEM_CODE</if>
-			) a
-			left join jg_xfk.jg_jgsx_publish_directory b on a.code = b.MATTER_CODE
-			where b.MATTER_NAME is not null
-		</foreach>
-		 t order by t.num desc
-	</select>
+    <select id="getDsGjsxByCity" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.util.List">
+        select t.* from
+        <foreach item="item" index="index" collection="list" separator="union all" open="(" close=")">
+            select a.SUPERVISE_ITEM_CODE,b.DEPARTMENT_NAME,b.MATTER_NAME,a.num from
+            (select count(1) num,
+            <if test="item.table_name == 'jg_jgxw_check_action'.toString()">SUPERVISE_ITEM_IMPLEMENT_CODE</if> SUPERVISE_ITEM_CODE,
+            left(
+            <if test="item.table_name == 'jg_jgxw_check_action'.toString()">SUPERVISE_ITEM_IMPLEMENT_CODE</if>
+            <if test="item.table_name != 'jg_jgxw_check_action'.toString()">SUPERVISE_ITEM_CODE</if>,8) code
+            from ${item.table_schema}.${item.table_name}  group by
+            <if test="item.table_name == 'jg_jgxw_check_action'.toString()">SUPERVISE_ITEM_IMPLEMENT_CODE</if>
+            <if test="item.table_name != 'jg_jgxw_check_action'.toString()">SUPERVISE_ITEM_CODE</if>
+            ) a
+            left join jg_xfk.jg_jgsx_publish_directory b on a.code = b.MATTER_CODE
+            where b.MATTER_NAME is not null
+        </foreach>
+        t order by t.num desc
+    </select>
 
 
-	<select id="getSzJgsxZyfgl" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getSzJgsxZyfgl" resultType="com.alibaba.fastjson.JSONObject">
 		SELECT department_id,E.province,IFNULL(sbjsl_fz,0) sbjsl_fz,IFNULL(sbjsl_fm,0) sbjsl_fm,sx AS sx_fz,E.fgl_fm,CASE WHEN sx>0 THEN sx/E.fgl_fm  ELSE 0 END AS jgsx_fgl,IFNULL(F.sbsj,0) AS jgsx_jsl FROM
 		(SELECT  A.department_id,A.fgl_fm,A.province,COUNT(B.SUPERVISE_ITEM_CODE) sx FROM
 		(SELECT province,department_id,CD_HU_SOURCE,fgl_fm FROM test.`depart` WHERE city ='省直')A LEFT JOIN
@@ -319,7 +319,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON E.province =F.province  ORDER BY  department_id
 	</select>
 
-	<select id="getDsJgsxZyfgl" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getDsJgsxZyfgl" resultType="com.alibaba.fastjson.JSONObject">
 
 	SELECT PROVINCE_CODE,G.province AS city,G.city AS city_fz,G.county AS county_fz,zrr_fz,fr_fz,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm, G.city/fgl_fm AS city_fgl,G.county/fgl_qx_fm AS county_fgl,G.zrr_fz/zrr_fm AS zrr_fgl,G.fr_fz/fr_fm AS fr_fgl,sbjsl_fz,sbjsl_fm,IFNULL(H.sbjsl,0) AS sbjsl  FROM
 	(SELECT  PROVINCE_CODE,province,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm,
@@ -366,7 +366,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-	<select id="getSzJgsxZyfglZq" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getSzJgsxZyfglZq" resultType="com.alibaba.fastjson.JSONObject">
 			SELECT department_id,E.province,IFNULL(sbjsl_fz,0) sbjsl_fz,IFNULL(sbjsl_fm,0) sbjsl_fm,sx AS sx_fz,E.fgl_fm,CASE WHEN sx>0 THEN sx/E.fgl_fm  ELSE 0 END AS jgsx_fgl,IFNULL(F.sbsj,0) AS jgsx_jsl FROM
 		(SELECT  A.department_id,A.fgl_fm,A.province,COUNT(B.SUPERVISE_ITEM_CODE) sx FROM
 		(SELECT province,department_id,CD_HU_SOURCE,fgl_fm FROM test.`depart` WHERE city ='省直')A LEFT JOIN
@@ -401,7 +401,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 
-	<select id="getDsJgsxZyfglZq" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getDsJgsxZyfglZq" resultType="com.alibaba.fastjson.JSONObject">
 	SELECT PROVINCE_CODE,G.province AS city,G.city AS city_fz,G.county AS county_fz,zrr_fz,fr_fz,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm, G.city/fgl_fm AS city_fgl,G.county/fgl_qx_fm AS county_fgl,G.zrr_fz/zrr_fm AS zrr_fgl,G.fr_fz/fr_fm AS fr_fgl,sbjsl_fz,sbjsl_fm,IFNULL(H.sbjsl,0) AS sbjsl  FROM
 	(SELECT  PROVINCE_CODE,province,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm,
 		SUM(CASE WHEN province=dq AND xzqybm IS NOT NULL THEN SUPERVISE_ITEM_CODE_count ELSE 0 END) city,
@@ -446,7 +446,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 
-	<select id="getZlErrorData" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    <select id="getZlErrorData" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
 		SELECT COUNT(c.cd_lsh) num,table_name,c.error_column,c.msg,D.CD_HB_source FROM
 		( SELECT DISTINCT A.*,b.table_name FROM
 		(SELECT  cd_lsh,error_column,msg FROM  `hbjg_jc_false`.${fdTableName})A,
@@ -456,12 +456,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE C.cd_lsh =D.cd_lsh  GROUP BY  table_name,c.error_column,c.msg,D.CD_HB_source ORDER BY  CD_HB_source,msg
 	</select>
 
-	<select id="getExistTablesInErrorDB" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getExistTablesInErrorDB" resultType="com.alibaba.fastjson.JSONObject">
 		select table_name from information_schema.`TABLES` where table_schema='hbjg_jc_false' and table_type='BASE TABLE' and  table_name REGEXP '_fd|_fi'
 	</select>
 
 
-	<select id="getHJTableInfos" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getHJTableInfos" resultType="com.alibaba.fastjson.JSONObject">
 		select a.table_schema,a.table_name ,a.table_comment
 		from information_schema.tables a
 		where a.table_schema = 'hbjg_hj_basic_all'
@@ -470,4 +470,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and a.TABLE_NAME not REGEXP '[0,9]+|_cp|_copy'
 	</select>
 
-</mapper> 
+</mapper>

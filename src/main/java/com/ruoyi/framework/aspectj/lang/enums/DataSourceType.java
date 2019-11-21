@@ -13,6 +13,11 @@ public enum DataSourceType
     MASTER,
 
     /**
+     * 国办
+     */
+    GB,
+
+    /**
      * 汇聚库
      */
     HJ,

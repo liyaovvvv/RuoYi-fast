@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改【请填写功能名称】')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-action-edit" th:object="${jgJgxwForceAction}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="endDate" th:value="${#dates.format(jgJgxwForceAction.endDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="submittedDate" th:value="${#dates.format(jgJgxwForceAction.submittedDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <select name="forceExecutionType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <select name="forceType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="checkActionCode" th:field="*{checkActionCode}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <textarea name="forceActionName" class="form-control">[[*{forceActionName}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <textarea name="addressRegistered" class="form-control">[[*{addressRegistered}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="illegalFact" th:field="*{illegalFact}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="cdIdBef" th:field="*{cdIdBef}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="areaNumber" th:field="*{areaNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="implementInstitutionCode" th:field="*{implementInstitutionCode}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="mandatoryBasis" th:field="*{mandatoryBasis}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="cdSource" th:field="*{cdSource}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <select name="administrativeCpCeType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="cdId" th:field="*{cdId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <select name="coerciveMeasureType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="forceExtendDate" th:field="*{forceExtendDate}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <textarea name="addressOperating" class="form-control">[[*{addressOperating}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <select name="lyType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="submittedPersonnel" th:field="*{submittedPersonnel}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="administrativeCpNa" th:field="*{administrativeCpNa}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="forceActionCode" th:field="*{forceActionCode}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="recordUniqueIdentity" th:field="*{recordUniqueIdentity}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="administrativeCpUiCode" th:field="*{administrativeCpUiCode}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <textarea name="superviseObject" class="form-control">[[*{superviseObject}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="cdOperation" th:field="*{cdOperation}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="cdBatch" th:field="*{cdBatch}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="implementInstitution" th:field="*{implementInstitution}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="mandatoryDecisionPatify" th:field="*{mandatoryDecisionPatify}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="cdTime" th:value="${#dates.format(jgJgxwForceAction.cdTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="mandatoryDecisionNumber" th:field="*{mandatoryDecisionNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="superviseItemCode" th:field="*{superviseItemCode}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="mandatoryDecisionSevDate" th:value="${#dates.format(jgJgxwForceAction.mandatoryDecisionSevDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <textarea name="administrativeCp" class="form-control">[[*{administrativeCp}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="cdLsh" th:field="*{cdLsh}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="cdLshSrc" th:field="*{cdLshSrc}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <input name="cdHbSource" th:field="*{cdHbSource}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script type="text/javascript">
+        var prefix = ctx + "system/action";
+        $("#form-action-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-action-edit').serialize());
+            }
+        }
+
+        $("input[name='endDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='submittedDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='cdTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='mandatoryDecisionSevDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>
