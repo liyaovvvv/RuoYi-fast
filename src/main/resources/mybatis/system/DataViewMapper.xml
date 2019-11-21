@@ -319,9 +319,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getDsJgsxZyfgl" resultType="com.alibaba.fastjson.JSONObject">
 
-
-		SELECT PROVINCE_CODE,G.province AS city,G.city AS city_fz,G.county AS county_fz,zrr_fz,fr_fz,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm, G.city/fgl_fm AS city_fgl,G.county/fgl_qx_fm AS county_fgl,G.zrr_fz/zrr_fm AS zrr_fgl,G.fr_fz/fr_fm AS fr_fgl,IFNULL(H.sbjsl,0) AS sbjsl  FROM
-		(SELECT  PROVINCE_CODE,province,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm,
+SELECT PROVINCE_CODE,G.province AS city,G.city AS city_fz,G.county AS county_fz,zrr_fz,fr_fz,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm, G.city/fgl_fm AS city_fgl,G.county/fgl_qx_fm AS county_fgl,G.zrr_fz/zrr_fm AS zrr_fgl,G.fr_fz/fr_fm AS fr_fgl,IFNULL(H.sbjsl,0) AS sbjsl  FROM
+	(SELECT  PROVINCE_CODE,province,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm,
 		SUM(CASE WHEN province=dq AND xzqybm IS NOT NULL THEN SUPERVISE_ITEM_CODE_count ELSE 0 END) city,
 		SUM(CASE WHEN province!=dq AND  xzqybm IS NOT NULL THEN SUPERVISE_ITEM_CODE_count ELSE 0 END) county,
 		SUM(zrr) AS zrr_fz,SUM(fr) AS fr_fz
@@ -346,21 +345,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		GROUP BY A.province,C.xzqybm,c.dq )F GROUP BY PROVINCE_CODE,province,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm)G
 		 LEFT JOIN
 		(SELECT  B.province,COUNT(*)/SUM(sbsj) sbjsl FROM
-		(SELECT SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,sbsj FROM
-		(SELECT LEFT(SUPERVISE_ITEM_IMPLEMENT_CODE,8) SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,CHECK_DATE,CD_HB_time) sbsj   FROM `jg_jgxw_check_action`   WHERE  CHECK_DATE> '2019-10-01 00:00:00' AND  SYSDATE()>CHECK_DATE
+
+		(SELECT SUPERVISE_ITEM_IMPLEMENT_CODE SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,CHECK_DATE,CD_HB_time)+1 sbsj   FROM `jg_jgxw_check_action`   WHERE  CHECK_DATE> '2019-10-01 00:00:00' AND  SYSDATE()>CHECK_DATE AND CD_HB_TIME> CHECK_DATE
 		 UNION ALL
-		SELECT LEFT(SUPERVISE_ITEM_CODE,8) SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,SUBMITTED_DATE,CD_HB_time) sbsj    FROM  `jg_jgxw_force_action`   WHERE  SUBMITTED_DATE> '2019-10-01 00:00:00' AND  SYSDATE()>SUBMITTED_DATE
+		SELECT SUPERVISE_ITEM_CODE SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,SUBMITTED_DATE,CD_HB_time)+1 sbsj    FROM  `jg_jgxw_force_action`   WHERE  SUBMITTED_DATE> '2019-10-01 00:00:00' AND  SYSDATE()>SUBMITTED_DATE AND CD_HB_TIME>SUBMITTED_DATE
 		 UNION ALL
-		SELECT LEFT(SUPERVISE_ITEM_CODE,8) SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,set_date,CD_HB_time) sbsj   FROM  `jg_jgxw_punish_action`   WHERE  set_date> '2019-10-01 00:00:00' AND  SYSDATE()>set_date
+		SELECT SUPERVISE_ITEM_CODE SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,set_date,CD_HB_time)+1 sbsj   FROM  `jg_jgxw_punish_action`   WHERE  set_date> '2019-10-01 00:00:00' AND  SYSDATE()>set_date AND CD_HB_TIME>set_date
 		 UNION ALL
-		SELECT LEFT(SUPERVISE_ITEM_CODE,8) SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,SUBMITTED_DATE,CD_HB_time) sbsj   FROM  `jg_jgxw_other_action`   WHERE  SUBMITTED_DATE> '2019-10-01 00:00:00' AND  SYSDATE()>SUBMITTED_DATE)C GROUP BY SUPERVISE_ITEM_CODE,CD_HB_SOURCE)A,
+		SELECT SUPERVISE_ITEM_CODE SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,SUBMITTED_DATE,CD_HB_time)+1 sbsj   FROM  `jg_jgxw_other_action`   WHERE  SUBMITTED_DATE> '2019-10-01 00:00:00' AND CD_HB_TIME>SUBMITTED_DATE )A,
 		(SELECT province,CD_HU_SOURCE FROM test.`depart` WHERE city ='地市')B,
 		(SELECT xzqybm,dq FROM test.`table_qybm` WHERE xzqybm LIKE'42%')C
 		WHERE A.CD_HB_SOURCE=B.CD_HU_SOURCE  AND C.xzqybm=A.Area_number
 		 AND A.SUPERVISE_ITEM_CODE !='无'  AND A.SUPERVISE_ITEM_CODE IS NOT NULL
-		GROUP BY B.province,C.xzqybm,c.dq)H
+		GROUP BY B.province)H
 		ON G.province =H.province ORDER BY  PROVINCE_CODE
-
 
 
 	</select>
@@ -400,10 +398,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getDsJgsxZyfglZq" resultType="com.alibaba.fastjson.JSONObject">
-
-
-	  SELECT PROVINCE_CODE,G.province AS city,G.city AS city_fz,G.county AS county_fz,zrr_fz,fr_fz,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm, G.city/fgl_fm AS city_fgl,G.county/fgl_qx_fm AS county_fgl,G.zrr_fz/zrr_fm AS zrr_fgl,G.fr_fz/fr_fm AS fr_fgl,IFNULL(H.sbjsl,0) AS sbjsl  FROM
-		(SELECT  PROVINCE_CODE,province,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm,
+		SELECT PROVINCE_CODE,G.province AS city,G.city AS city_fz,G.county AS county_fz,zrr_fz,fr_fz,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm, G.city/fgl_fm AS city_fgl,G.county/fgl_qx_fm AS county_fgl,G.zrr_fz/zrr_fm AS zrr_fgl,G.fr_fz/fr_fm AS fr_fgl,IFNULL(H.sbjsl,0) AS sbjsl  FROM
+	(SELECT  PROVINCE_CODE,province,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm,
 		SUM(CASE WHEN province=dq AND xzqybm IS NOT NULL THEN SUPERVISE_ITEM_CODE_count ELSE 0 END) city,
 		SUM(CASE WHEN province!=dq AND  xzqybm IS NOT NULL THEN SUPERVISE_ITEM_CODE_count ELSE 0 END) county,
 		SUM(zrr) AS zrr_fz,SUM(fr) AS fr_fz
@@ -428,23 +424,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		GROUP BY A.province,C.xzqybm,c.dq )F GROUP BY PROVINCE_CODE,province,fgl_fm,fgl_qx_fm,zrr_fm,fr_fm)G
 		 LEFT JOIN
 		(SELECT  B.province,COUNT(*)/SUM(sbsj) sbjsl FROM
-		(SELECT SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,sbsj FROM
-		(SELECT LEFT(SUPERVISE_ITEM_IMPLEMENT_CODE,8) SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,CHECK_DATE,CD_HB_time) sbsj   FROM `jg_jgxw_check_action`   WHERE  CHECK_DATE> '2019-10-01 00:00:00' AND  SYSDATE()>CHECK_DATE
+
+		(SELECT SUPERVISE_ITEM_IMPLEMENT_CODE SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,CHECK_DATE,CD_HB_time)+1 sbsj   FROM `jg_jgxw_check_action`   WHERE  CHECK_DATE> '2019-10-01 00:00:00' AND  SYSDATE()>CHECK_DATE AND CD_HB_TIME> CHECK_DATE
 		 UNION ALL
-		SELECT LEFT(SUPERVISE_ITEM_CODE,8) SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,SUBMITTED_DATE,CD_HB_time) sbsj    FROM  `jg_jgxw_force_action`   WHERE  SUBMITTED_DATE> '2019-10-01 00:00:00' AND  SYSDATE()>SUBMITTED_DATE
+		SELECT SUPERVISE_ITEM_CODE SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,SUBMITTED_DATE,CD_HB_time)+1 sbsj    FROM  `jg_jgxw_force_action`   WHERE  SUBMITTED_DATE> '2019-10-01 00:00:00' AND  SYSDATE()>SUBMITTED_DATE AND CD_HB_TIME>SUBMITTED_DATE
 		 UNION ALL
-		SELECT LEFT(SUPERVISE_ITEM_CODE,8) SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,set_date,CD_HB_time) sbsj   FROM  `jg_jgxw_punish_action`   WHERE  set_date> '2019-10-01 00:00:00' AND  SYSDATE()>set_date
+		SELECT SUPERVISE_ITEM_CODE SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,set_date,CD_HB_time)+1 sbsj   FROM  `jg_jgxw_punish_action`   WHERE  set_date> '2019-10-01 00:00:00' AND  SYSDATE()>set_date AND CD_HB_TIME>set_date
 		 UNION ALL
-		SELECT LEFT(SUPERVISE_ITEM_CODE,8) SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,SUBMITTED_DATE,CD_HB_time) sbsj   FROM  `jg_jgxw_other_action`   WHERE  SUBMITTED_DATE> '2019-10-01 00:00:00' AND  SYSDATE()>SUBMITTED_DATE)C GROUP BY SUPERVISE_ITEM_CODE,CD_HB_SOURCE)A,
+		SELECT SUPERVISE_ITEM_CODE SUPERVISE_ITEM_CODE,CD_HB_SOURCE,Area_number,TIMESTAMPDIFF(DAY,SUBMITTED_DATE,CD_HB_time)+1 sbsj   FROM  `jg_jgxw_other_action`   WHERE  SUBMITTED_DATE> '2019-10-01 00:00:00' AND CD_HB_TIME>SUBMITTED_DATE )A,
 		(SELECT province,CD_HU_SOURCE FROM test.`depart` WHERE city ='地市')B,
 		(SELECT xzqybm,dq FROM test.`table_qybm` WHERE xzqybm LIKE'42%')C
 		WHERE A.CD_HB_SOURCE=B.CD_HU_SOURCE  AND C.xzqybm=A.Area_number
 		 AND A.SUPERVISE_ITEM_CODE !='无'  AND A.SUPERVISE_ITEM_CODE IS NOT NULL
-		GROUP BY B.province,C.xzqybm,c.dq)H
+		GROUP BY B.province)H
 		ON G.province =H.province ORDER BY  PROVINCE_CODE
-
-
-
 	</select>
 
 	<select id="getZlErrorData" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">

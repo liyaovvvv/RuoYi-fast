@@ -1,6 +1,8 @@
 package com.ruoyi.project.monitor.job.task;
 
 import com.ruoyi.project.system.data.service.IDataViewService;
+import com.ruoyi.project.system.gbdata.service.IGbDataService;
+import com.ruoyi.project.system.gbdata.service.IRefreshSignKeyService;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.utils.StringUtils;
 
@@ -17,6 +19,12 @@ public class RyTask
 
     @Resource
     IDataViewService dataViewService;
+
+    @Resource
+    private IRefreshSignKeyService refreshSignKeyService;
+
+    @Resource
+    private IGbDataService gbDataService;
 
     public void ryMultipleParams(String s, Boolean b, Long l, Double d, Integer i)
     {
@@ -89,4 +97,37 @@ public class RyTask
         dataViewService.getDsJgsxZyfgl();
     }
 
+    /**
+     * 国办数据下发任务密钥更新
+     */
+    public void getRefreshSignSecretKey(){
+        refreshSignKeyService.refreshSignKey();
+    }
+    /**
+     * 国办数据下发任务检查数据拉取
+     */
+    public void getJgxwCheckActionData(){
+        gbDataService.getGbDataByHttp("1", "0", null);
+    }
+
+    /**
+     * 国办数据下发任务检查数据拉取
+     */
+    public void getJgxwForceActionData(){
+        gbDataService.getGbDataByHttp("2", "0", null);
+    }
+
+    /**
+     * 国办数据下发任务检查数据拉取
+     */
+    public void getJgxwOtherActionData(){
+        gbDataService.getGbDataByHttp("3", "0", null);
+    }
+
+    /**
+     * 国办数据下发任务检查数据拉取
+     */
+    public void getJgxwPunishActionData(){
+        gbDataService.getGbDataByHttp("4", "0", null);
+    }
 }

@@ -1,0 +1,1131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.gbdata.mapper.GbDataViewMapper">
+    <resultMap type="DataDictionary" id="DataDictionaryResult">
+        <result property="id"    column="id"    />
+        <result property="dkey"    column="dkey"    />
+        <result property="dvalue"    column="dvalue"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="description"    column="description"    />
+    </resultMap>
+
+    <select id="getDataDictionary" resultType="com.ruoyi.project.system.gbdata.domain.DataDictionary">
+        select dkey, dvalue from data_dictionary
+    </select>
+    <update id="updateDataDictionary" parameterType="DataDictionary">
+        update data_dictionary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dvalue != null  and dvalue != ''">dvalue = #{dvalue},</if>
+            <if test="update_time != null  and update_time != ''">update_time = #{update_time},</if>
+        </trim>
+        where dkey = #{dkey}
+    </update>
+
+
+    <resultMap type="ImplementOrgCode" id="ImplementOrgCodeResult">
+        <result property="id"    column="id"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="implementInstitutionCode"    column="implement_institution_code"    />
+        <result property="cdHbSource"    column="cd_hb_source"    />
+        <result property="areaNumber"    column="area_number"    />
+    </resultMap>
+
+    <select id="getImplementOrgCode" resultMap="ImplementOrgCodeResult">
+        select id, org_name, implement_institution_code, cd_hb_source, area_number from implement_org_code
+    </select>
+
+    <resultMap type="ErrorRecord" id="ErrorRecordResult">
+        <result property="id"    column="id"    />
+        <result property="tableId"    column="table_id"    />
+        <result property="data"    column="data"    />
+    </resultMap>
+
+    <sql id="selectErrorRecordVo">
+        select id, table_id, data from error_record
+    </sql>
+
+    <select id="selectErrorRecordList" parameterType="ErrorRecord" resultMap="ErrorRecordResult">
+        <include refid="selectErrorRecordVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="tableId != null  and tableId != ''"> and table_id = #{tableId}</if>
+            <if test="data != null  and data != ''"> and data = #{data}</if>
+        </where>
+    </select>
+
+    <select id="selectErrorRecordById" parameterType="Long" resultMap="ErrorRecordResult">
+        <include refid="selectErrorRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertErrorRecord" parameterType="ErrorRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into error_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tableId != null  and tableId != ''">table_id,</if>
+            <if test="data != null  and data != ''">data,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tableId != null  and tableId != ''">#{tableId},</if>
+            <if test="data != null  and data != ''">#{data},</if>
+        </trim>
+    </insert>
+
+    <update id="updateErrorRecord" parameterType="ErrorRecord">
+        update error_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tableId != null  and tableId != ''">table_id = #{tableId},</if>
+            <if test="data != null  and data != ''">data = #{data},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteErrorRecordById" parameterType="Long">
+        delete from error_record where id = #{id}
+    </delete>
+
+    <delete id="deleteErrorRecordByIds" parameterType="String">
+        delete from error_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <resultMap type="JgJgxwCheckAction" id="JgJgxwCheckActionResult">
+        <result property="id"    column="id"    />
+        <result property="submittedDate"    column="submitted_date"    />
+        <result property="checkActionCode"    column="check_action_code"    />
+        <result property="addressRegistered"    column="address_registered"    />
+        <result property="checkType"    column="check_type"    />
+        <result property="cdIdBef"    column="cd_id_bef"    />
+        <result property="areaNumber"    column="area_number"    />
+        <result property="checkPersonnelCode"    column="check_personnel_code"    />
+        <result property="checkForm"    column="check_form"    />
+        <result property="implementInstitutionCode"    column="implement_institution_code"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="checkResult"    column="check_result"    />
+        <result property="cdSource"    column="cd_source"    />
+        <result property="checkDate"    column="check_date"    />
+        <result property="administrativeCpCeType"    column="administrative_cp_ce_type"    />
+        <result property="cdId"    column="cd_id"    />
+        <result property="superviseItemImplementCode"    column="supervise_item_implement_code"    />
+        <result property="addressOperating"    column="address_operating"    />
+        <result property="lyType"    column="ly_type"    />
+        <result property="checkActionName"    column="check_action_name"    />
+        <result property="submittedPersonnel"    column="submitted_personnel"    />
+        <result property="administrativeCpNa"    column="administrative_cp_na"    />
+        <result property="checkPersonnel"    column="check_personnel"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="recordUniqueIdentity"    column="record_unique_identity"    />
+        <result property="administrativeCpUiCode"    column="administrative_cp_ui_code"    />
+        <result property="superviseObject"    column="supervise_object"    />
+        <result property="entrustDeptCode"    column="entrust_dept_code"    />
+        <result property="checkMode"    column="check_mode"    />
+        <result property="cdOperation"    column="cd_operation"    />
+        <result property="cdBatch"    column="cd_batch"    />
+        <result property="superviseItemCheckIcode"    column="supervise_item_check_icode"    />
+        <result property="implementInstitution"    column="implement_institution"    />
+        <result property="cdTime"    column="cd_time"    />
+        <result property="entrustDept"    column="entrust_dept"    />
+        <result property="administrativeCp"    column="administrative_cp"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="cdLsh"    column="cd_lsh"    />
+        <result property="cdLshSrc"    column="cd_lsh_src"    />
+        <result property="cdHbSource"    column="cd_hb_source"    />
+    </resultMap>
+
+    <sql id="selectJgJgxwCheckActionVo">
+        select id, submitted_date, check_action_code, address_registered, check_type, cd_id_bef, area_number, check_personnel_code, check_form, implement_institution_code, update_time, check_result, cd_source, check_date, administrative_cp_ce_type, cd_id, supervise_item_implement_code, address_operating, ly_type, check_action_name, submitted_personnel, administrative_cp_na, check_personnel, create_time, record_unique_identity, administrative_cp_ui_code, supervise_object, entrust_dept_code, check_mode, cd_operation, cd_batch, supervise_item_check_icode, implement_institution, cd_time, entrust_dept, administrative_cp, plan_id, cd_lsh, cd_lsh_src, cd_hb_source from jg_jgxw_check_action
+    </sql>
+
+    <select id="selectJgJgxwCheckActionList" parameterType="JgJgxwCheckAction" resultMap="JgJgxwCheckActionResult">
+        <include refid="selectJgJgxwCheckActionVo"/>
+        <where>
+            <if test="submittedDate != null  and submittedDate != ''"> and submitted_date = #{submittedDate}</if>
+            <if test="checkActionCode != null  and checkActionCode != ''"> and check_action_code = #{checkActionCode}</if>
+            <if test="addressRegistered != null  and addressRegistered != ''"> and address_registered = #{addressRegistered}</if>
+            <if test="checkType != null  and checkType != ''"> and check_type = #{checkType}</if>
+            <if test="cdIdBef != null  and cdIdBef != ''"> and cd_id_bef = #{cdIdBef}</if>
+            <if test="areaNumber != null  and areaNumber != ''"> and area_number = #{areaNumber}</if>
+            <if test="checkPersonnelCode != null  and checkPersonnelCode != ''"> and check_personnel_code = #{checkPersonnelCode}</if>
+            <if test="checkForm != null  and checkForm != ''"> and check_form = #{checkForm}</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''"> and implement_institution_code = #{implementInstitutionCode}</if>
+            <if test="checkResult != null  and checkResult != ''"> and check_result = #{checkResult}</if>
+            <if test="cdSource != null  and cdSource != ''"> and cd_source = #{cdSource}</if>
+            <if test="checkDate != null  and checkDate != ''"> and check_date = #{checkDate}</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''"> and administrative_cp_ce_type = #{administrativeCpCeType}</if>
+            <if test="cdId != null  and cdId != ''"> and cd_id = #{cdId}</if>
+            <if test="superviseItemImplementCode != null  and superviseItemImplementCode != ''"> and supervise_item_implement_code = #{superviseItemImplementCode}</if>
+            <if test="addressOperating != null  and addressOperating != ''"> and address_operating = #{addressOperating}</if>
+            <if test="lyType != null  and lyType != ''"> and ly_type = #{lyType}</if>
+            <if test="checkActionName != null  and checkActionName != ''"> and check_action_name like concat('%', #{checkActionName}, '%')</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''"> and submitted_personnel = #{submittedPersonnel}</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''"> and administrative_cp_na = #{administrativeCpNa}</if>
+            <if test="checkPersonnel != null  and checkPersonnel != ''"> and check_personnel = #{checkPersonnel}</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''"> and record_unique_identity = #{recordUniqueIdentity}</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''"> and administrative_cp_ui_code = #{administrativeCpUiCode}</if>
+            <if test="superviseObject != null  and superviseObject != ''"> and supervise_object = #{superviseObject}</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''"> and entrust_dept_code = #{entrustDeptCode}</if>
+            <if test="checkMode != null  and checkMode != ''"> and check_mode = #{checkMode}</if>
+            <if test="cdOperation != null  and cdOperation != ''"> and cd_operation = #{cdOperation}</if>
+            <if test="cdBatch != null  and cdBatch != ''"> and cd_batch = #{cdBatch}</if>
+            <if test="superviseItemCheckIcode != null  and superviseItemCheckIcode != ''"> and supervise_item_check_icode = #{superviseItemCheckIcode}</if>
+            <if test="implementInstitution != null  and implementInstitution != ''"> and implement_institution = #{implementInstitution}</if>
+            <if test="cdTime != null"> and cd_time = #{cdTime}</if>
+            <if test="entrustDept != null  and entrustDept != ''"> and entrust_dept = #{entrustDept}</if>
+            <if test="administrativeCp != null  and administrativeCp != ''"> and administrative_cp = #{administrativeCp}</if>
+            <if test="planId != null  and planId != ''"> and plan_id = #{planId}</if>
+            <if test="cdLsh != null  and cdLsh != ''"> and cd_lsh = #{cdLsh}</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''"> and cd_lsh_src = #{cdLshSrc}</if>
+            <if test="cdHbSource != null  and cdHbSource != ''"> and cd_hb_sourced = #{cdHbSource}</if>
+        </where>
+    </select>
+
+    <select id="selectJgJgxwCheckActionById" parameterType="Long" resultMap="JgJgxwCheckActionResult">
+        <include refid="selectJgJgxwCheckActionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertJgJgxwCheckAction" parameterType="JgJgxwCheckAction" useGeneratedKeys="true" keyProperty="id">
+        insert into jg_jgxw_check_action
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="submittedDate != null  and submittedDate != ''">submitted_date,</if>
+            <if test="checkActionCode != null  and checkActionCode != ''">check_action_code,</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">address_registered,</if>
+            <if test="checkType != null  and checkType != ''">check_type,</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">cd_id_bef,</if>
+            <if test="areaNumber != null  and areaNumber != ''">area_number,</if>
+            <if test="checkPersonnelCode != null  and checkPersonnelCode != ''">check_personnel_code,</if>
+            <if test="checkForm != null  and checkForm != ''">check_form,</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">implement_institution_code,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="checkResult != null  and checkResult != ''">check_result,</if>
+            <if test="cdSource != null  and cdSource != ''">cd_source,</if>
+            <if test="checkDate != null  and checkDate != ''">check_date,</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">administrative_cp_ce_type,</if>
+            <if test="cdId != null  and cdId != ''">cd_id,</if>
+            <if test="superviseItemImplementCode != null  and superviseItemImplementCode != ''">supervise_item_implement_code,</if>
+            <if test="addressOperating != null  and addressOperating != ''">address_operating,</if>
+            <if test="lyType != null  and lyType != ''">ly_type,</if>
+            <if test="checkActionName != null  and checkActionName != ''">check_action_name,</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">submitted_personnel,</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">administrative_cp_na,</if>
+            <if test="checkPersonnel != null  and checkPersonnel != ''">check_personnel,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">record_unique_identity,</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">administrative_cp_ui_code,</if>
+            <if test="superviseObject != null  and superviseObject != ''">supervise_object,</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''">entrust_dept_code,</if>
+            <if test="checkMode != null  and checkMode != ''">check_mode,</if>
+            <if test="cdOperation != null  and cdOperation != ''">cd_operation,</if>
+            <if test="cdBatch != null  and cdBatch != ''">cd_batch,</if>
+            <if test="superviseItemCheckIcode != null  and superviseItemCheckIcode != ''">supervise_item_check_icode,</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">implement_institution,</if>
+            <if test="cdTime != null">cd_time,</if>
+            <if test="entrustDept != null  and entrustDept != ''">entrust_dept,</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">administrative_cp,</if>
+            <if test="planId != null  and planId != ''">plan_id,</if>
+            <if test="cdLsh != null  and cdLsh != ''">cd_lsh,</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">cd_lsh_src,</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">cd_hb_source,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="submittedDate != null  and submittedDate != ''">#{submittedDate},</if>
+            <if test="checkActionCode != null  and checkActionCode != ''">#{checkActionCode},</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">#{addressRegistered},</if>
+            <if test="checkType != null  and checkType != ''">#{checkType},</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">#{cdIdBef},</if>
+            <if test="areaNumber != null  and areaNumber != ''">#{areaNumber},</if>
+            <if test="checkPersonnelCode != null  and checkPersonnelCode != ''">#{checkPersonnelCode},</if>
+            <if test="checkForm != null  and checkForm != ''">#{checkForm},</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">#{implementInstitutionCode},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="checkResult != null  and checkResult != ''">#{checkResult},</if>
+            <if test="cdSource != null  and cdSource != ''">#{cdSource},</if>
+            <if test="checkDate != null  and checkDate != ''">#{checkDate},</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">#{administrativeCpCeType},</if>
+            <if test="cdId != null  and cdId != ''">#{cdId},</if>
+            <if test="superviseItemImplementCode != null  and superviseItemImplementCode != ''">#{superviseItemImplementCode},</if>
+            <if test="addressOperating != null  and addressOperating != ''">#{addressOperating},</if>
+            <if test="lyType != null  and lyType != ''">#{lyType},</if>
+            <if test="checkActionName != null  and checkActionName != ''">#{checkActionName},</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">#{submittedPersonnel},</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">#{administrativeCpNa},</if>
+            <if test="checkPersonnel != null  and checkPersonnel != ''">#{checkPersonnel},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">#{recordUniqueIdentity},</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">#{administrativeCpUiCode},</if>
+            <if test="superviseObject != null  and superviseObject != ''">#{superviseObject},</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''">#{entrustDeptCode},</if>
+            <if test="checkMode != null  and checkMode != ''">#{checkMode},</if>
+            <if test="cdOperation != null  and cdOperation != ''">#{cdOperation},</if>
+            <if test="cdBatch != null  and cdBatch != ''">#{cdBatch},</if>
+            <if test="superviseItemCheckIcode != null  and superviseItemCheckIcode != ''">#{superviseItemCheckIcode},</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">#{implementInstitution},</if>
+            <if test="cdTime != null">#{cdTime},</if>
+            <if test="entrustDept != null  and entrustDept != ''">#{entrustDept},</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">#{administrativeCp},</if>
+            <if test="planId != null  and planId != ''">#{planId},</if>
+            <if test="cdLsh != null  and cdLsh != ''">#{cdLsh},</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">#{cdLshSrc},</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">#{cdHbSource},</if>
+        </trim>
+    </insert>
+
+    <update id="updateJgJgxwCheckAction" parameterType="JgJgxwCheckAction">
+        update jg_jgxw_check_action
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="submittedDate != null  and submittedDate != ''">submitted_date = #{submittedDate},</if>
+            <if test="checkActionCode != null  and checkActionCode != ''">check_action_code = #{checkActionCode},</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">address_registered = #{addressRegistered},</if>
+            <if test="checkType != null  and checkType != ''">check_type = #{checkType},</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">cd_id_bef = #{cdIdBef},</if>
+            <if test="areaNumber != null  and areaNumber != ''">area_number = #{areaNumber},</if>
+            <if test="checkPersonnelCode != null  and checkPersonnelCode != ''">check_personnel_code = #{checkPersonnelCode},</if>
+            <if test="checkForm != null  and checkForm != ''">check_form = #{checkForm},</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">implement_institution_code = #{implementInstitutionCode},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="checkResult != null  and checkResult != ''">check_result = #{checkResult},</if>
+            <if test="cdSource != null  and cdSource != ''">cd_source = #{cdSource},</if>
+            <if test="checkDate != null  and checkDate != ''">check_date = #{checkDate},</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">administrative_cp_ce_type = #{administrativeCpCeType},</if>
+            <if test="cdId != null  and cdId != ''">cd_id = #{cdId},</if>
+            <if test="superviseItemImplementCode != null  and superviseItemImplementCode != ''">supervise_item_implement_code = #{superviseItemImplementCode},</if>
+            <if test="addressOperating != null  and addressOperating != ''">address_operating = #{addressOperating},</if>
+            <if test="lyType != null  and lyType != ''">ly_type = #{lyType},</if>
+            <if test="checkActionName != null  and checkActionName != ''">check_action_name = #{checkActionName},</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">submitted_personnel = #{submittedPersonnel},</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">administrative_cp_na = #{administrativeCpNa},</if>
+            <if test="checkPersonnel != null  and checkPersonnel != ''">check_personnel = #{checkPersonnel},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">record_unique_identity = #{recordUniqueIdentity},</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">administrative_cp_ui_code = #{administrativeCpUiCode},</if>
+            <if test="superviseObject != null  and superviseObject != ''">supervise_object = #{superviseObject},</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''">entrust_dept_code = #{entrustDeptCode},</if>
+            <if test="checkMode != null  and checkMode != ''">check_mode = #{checkMode},</if>
+            <if test="cdOperation != null  and cdOperation != ''">cd_operation = #{cdOperation},</if>
+            <if test="cdBatch != null  and cdBatch != ''">cd_batch = #{cdBatch},</if>
+            <if test="superviseItemCheckIcode != null  and superviseItemCheckIcode != ''">supervise_item_check_icode = #{superviseItemCheckIcode},</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">implement_institution = #{implementInstitution},</if>
+            <if test="cdTime != null">cd_time = #{cdTime},</if>
+            <if test="entrustDept != null  and entrustDept != ''">entrust_dept = #{entrustDept},</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">administrative_cp = #{administrativeCp},</if>
+            <if test="planId != null  and planId != ''">plan_id = #{planId},</if>
+            <if test="cdLsh != null  and cdLsh != ''">cd_lsh = #{cdLsh},</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">cd_lsh_src = #{cdLshSrc},</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">cd_hb_source = #{cdHbSource},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJgJgxwCheckActionById" parameterType="Long">
+        delete from jg_jgxw_check_action where id = #{id}
+    </delete>
+
+    <delete id="deleteJgJgxwCheckActionByIds" parameterType="String">
+        delete from jg_jgxw_check_action where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <resultMap type="JgJgxwOtherAction" id="JgJgxwOtherActionResult">
+        <result property="id"    column="id"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="submittedDate"    column="submitted_date"    />
+        <result property="closingCase"    column="closing_case"    />
+        <result property="actionCode"    column="action_code"    />
+        <result property="addressRegistered"    column="address_registered"    />
+        <result property="cdIdBef"    column="cd_id_bef"    />
+        <result property="areaNumber"    column="area_number"    />
+        <result property="implementInstitutionCode"    column="implement_institution_code"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="cdSource"    column="cd_source"    />
+        <result property="actionName"    column="action_name"    />
+        <result property="administrativeCpCeType"    column="administrative_cp_ce_type"    />
+        <result property="cdId"    column="cd_id"    />
+        <result property="addressOperating"    column="address_operating"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="lyType"    column="ly_type"    />
+        <result property="submittedPersonnel"    column="submitted_personnel"    />
+        <result property="administrativeCpNa"    column="administrative_cp_na"    />
+        <result property="superviseMeasure"    column="supervise_measure"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="checkBehaviorNumber"    column="check_behavior_number"    />
+        <result property="recordUniqueIdentity"    column="record_unique_identity"    />
+        <result property="administrativeCpUiCode"    column="administrative_cp_ui_code"    />
+        <result property="superviseObject"    column="supervise_object"    />
+        <result property="entrustDeptCode"    column="entrust_dept_code"    />
+        <result property="cdOperation"    column="cd_operation"    />
+        <result property="cdBatch"    column="cd_batch"    />
+        <result property="implementInstitution"    column="implement_institution"    />
+        <result property="itemSource"    column="item_source"    />
+        <result property="cdTime"    column="cd_time"    />
+        <result property="entrustDept"    column="entrust_dept"    />
+        <result property="superviseItemCode"    column="supervise_item_code"    />
+        <result property="administrativeCp"    column="administrative_cp"    />
+        <result property="cdLsh"    column="cd_lsh"    />
+        <result property="cdLshSrc"    column="cd_lsh_src"    />
+        <result property="cdHbSource"    column="cd_hb_source"    />
+    </resultMap>
+
+    <sql id="selectJgJgxwOtherActionVo">
+        select id, end_date, submitted_date, closing_case, action_code, address_registered, cd_id_bef, area_number, implement_institution_code, update_time, cd_source, action_name, administrative_cp_ce_type, cd_id, address_operating, start_date, ly_type, submitted_personnel, administrative_cp_na, supervise_measure, create_time, check_behavior_number, record_unique_identity, administrative_cp_ui_code, supervise_object, entrust_dept_code, cd_operation, cd_batch, implement_institution, item_source, cd_time, entrust_dept, supervise_item_code, administrative_cp, cd_lsh, cd_lsh_src, cd_hb_source from jg_jgxw_other_action
+    </sql>
+
+    <select id="selectJgJgxwOtherActionList" parameterType="JgJgxwOtherAction" resultMap="JgJgxwOtherActionResult">
+        <include refid="selectJgJgxwOtherActionVo"/>
+        <where>
+            <if test="endDate != null  and endDate != ''"> and end_date = #{endDate}</if>
+            <if test="submittedDate != null  and submittedDate != ''"> and submitted_date = #{submittedDate}</if>
+            <if test="closingCase != null  and closingCase != ''"> and closing_case = #{closingCase}</if>
+            <if test="actionCode != null  and actionCode != ''"> and action_code = #{actionCode}</if>
+            <if test="addressRegistered != null  and addressRegistered != ''"> and address_registered = #{addressRegistered}</if>
+            <if test="cdIdBef != null  and cdIdBef != ''"> and cd_id_bef = #{cdIdBef}</if>
+            <if test="areaNumber != null  and areaNumber != ''"> and area_number = #{areaNumber}</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''"> and implement_institution_code = #{implementInstitutionCode}</if>
+            <if test="cdSource != null  and cdSource != ''"> and cd_source = #{cdSource}</if>
+            <if test="actionName != null  and actionName != ''"> and action_name like concat('%', #{actionName}, '%')</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''"> and administrative_cp_ce_type = #{administrativeCpCeType}</if>
+            <if test="cdId != null  and cdId != ''"> and cd_id = #{cdId}</if>
+            <if test="addressOperating != null  and addressOperating != ''"> and address_operating = #{addressOperating}</if>
+            <if test="startDate != null  and startDate != ''"> and start_date = #{startDate}</if>
+            <if test="lyType != null  and lyType != ''"> and ly_type = #{lyType}</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''"> and submitted_personnel = #{submittedPersonnel}</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''"> and administrative_cp_na = #{administrativeCpNa}</if>
+            <if test="superviseMeasure != null  and superviseMeasure != ''"> and supervise_measure = #{superviseMeasure}</if>
+            <if test="checkBehaviorNumber != null  and checkBehaviorNumber != ''"> and check_behavior_number = #{checkBehaviorNumber}</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''"> and record_unique_identity = #{recordUniqueIdentity}</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''"> and administrative_cp_ui_code = #{administrativeCpUiCode}</if>
+            <if test="superviseObject != null  and superviseObject != ''"> and supervise_object = #{superviseObject}</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''"> and entrust_dept_code = #{entrustDeptCode}</if>
+            <if test="cdOperation != null  and cdOperation != ''"> and cd_operation = #{cdOperation}</if>
+            <if test="cdBatch != null  and cdBatch != ''"> and cd_batch = #{cdBatch}</if>
+            <if test="implementInstitution != null  and implementInstitution != ''"> and implement_institution = #{implementInstitution}</if>
+            <if test="itemSource != null  and itemSource != ''"> and item_source = #{itemSource}</if>
+            <if test="cdTime != null"> and cd_time = #{cdTime}</if>
+            <if test="entrustDept != null  and entrustDept != ''"> and entrust_dept = #{entrustDept}</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''"> and supervise_item_code = #{superviseItemCode}</if>
+            <if test="administrativeCp != null  and administrativeCp != ''"> and administrative_cp = #{administrativeCp}</if>
+            <if test="cdLsh != null  and cdLsh != ''"> and cd_lsh = #{cdLsh}</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''"> and cd_lsh_src = #{cdLshSrc}</if>
+            <if test="cdHbSource != null  and cdHbSource != ''"> and cd_hb_source = #{cdHbSource}</if>
+        </where>
+    </select>
+
+    <select id="selectJgJgxwOtherActionById" parameterType="Long" resultMap="JgJgxwOtherActionResult">
+        <include refid="selectJgJgxwOtherActionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertJgJgxwOtherAction" parameterType="JgJgxwOtherAction" useGeneratedKeys="true" keyProperty="id">
+        insert into jg_jgxw_other_action
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="endDate != null  and endDate != ''">end_date,</if>
+            <if test="submittedDate != null  and submittedDate != ''">submitted_date,</if>
+            <if test="closingCase != null  and closingCase != ''">closing_case,</if>
+            <if test="actionCode != null  and actionCode != ''">action_code,</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">address_registered,</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">cd_id_bef,</if>
+            <if test="areaNumber != null  and areaNumber != ''">area_number,</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">implement_institution_code,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="cdSource != null  and cdSource != ''">cd_source,</if>
+            <if test="actionName != null  and actionName != ''">action_name,</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">administrative_cp_ce_type,</if>
+            <if test="cdId != null  and cdId != ''">cd_id,</if>
+            <if test="addressOperating != null  and addressOperating != ''">address_operating,</if>
+            <if test="startDate != null  and startDate != ''">start_date,</if>
+            <if test="lyType != null  and lyType != ''">ly_type,</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">submitted_personnel,</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">administrative_cp_na,</if>
+            <if test="superviseMeasure != null  and superviseMeasure != ''">supervise_measure,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="checkBehaviorNumber != null  and checkBehaviorNumber != ''">check_behavior_number,</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">record_unique_identity,</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">administrative_cp_ui_code,</if>
+            <if test="superviseObject != null  and superviseObject != ''">supervise_object,</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''">entrust_dept_code,</if>
+            <if test="cdOperation != null  and cdOperation != ''">cd_operation,</if>
+            <if test="cdBatch != null  and cdBatch != ''">cd_batch,</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">implement_institution,</if>
+            <if test="itemSource != null  and itemSource != ''">item_source,</if>
+            <if test="cdTime != null">cd_time,</if>
+            <if test="entrustDept != null  and entrustDept != ''">entrust_dept,</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''">supervise_item_code,</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">administrative_cp,</if>
+            <if test="cdLsh != null  and cdLsh != ''">cd_lsh,</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">cd_lsh_src,</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">cd_hb_source,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="endDate != null  and endDate != ''">#{endDate},</if>
+            <if test="submittedDate != null  and submittedDate != ''">#{submittedDate},</if>
+            <if test="closingCase != null  and closingCase != ''">#{closingCase},</if>
+            <if test="actionCode != null  and actionCode != ''">#{actionCode},</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">#{addressRegistered},</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">#{cdIdBef},</if>
+            <if test="areaNumber != null  and areaNumber != ''">#{areaNumber},</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">#{implementInstitutionCode},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="cdSource != null  and cdSource != ''">#{cdSource},</if>
+            <if test="actionName != null  and actionName != ''">#{actionName},</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">#{administrativeCpCeType},</if>
+            <if test="cdId != null  and cdId != ''">#{cdId},</if>
+            <if test="addressOperating != null  and addressOperating != ''">#{addressOperating},</if>
+            <if test="startDate != null  and startDate != ''">#{startDate},</if>
+            <if test="lyType != null  and lyType != ''">#{lyType},</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">#{submittedPersonnel},</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">#{administrativeCpNa},</if>
+            <if test="superviseMeasure != null  and superviseMeasure != ''">#{superviseMeasure},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="checkBehaviorNumber != null  and checkBehaviorNumber != ''">#{checkBehaviorNumber},</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">#{recordUniqueIdentity},</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">#{administrativeCpUiCode},</if>
+            <if test="superviseObject != null  and superviseObject != ''">#{superviseObject},</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''">#{entrustDeptCode},</if>
+            <if test="cdOperation != null  and cdOperation != ''">#{cdOperation},</if>
+            <if test="cdBatch != null  and cdBatch != ''">#{cdBatch},</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">#{implementInstitution},</if>
+            <if test="itemSource != null  and itemSource != ''">#{itemSource},</if>
+            <if test="cdTime != null">#{cdTime},</if>
+            <if test="entrustDept != null  and entrustDept != ''">#{entrustDept},</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''">#{superviseItemCode},</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">#{administrativeCp},</if>
+            <if test="cdLsh != null  and cdLsh != ''">#{cdLsh},</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">#{cdLshSrc},</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">#{cdHbSource},</if>
+        </trim>
+    </insert>
+
+    <update id="updateJgJgxwOtherAction" parameterType="JgJgxwOtherAction">
+        update jg_jgxw_other_action
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="endDate != null  and endDate != ''">end_date = #{endDate},</if>
+            <if test="submittedDate != null  and submittedDate != ''">submitted_date = #{submittedDate},</if>
+            <if test="closingCase != null  and closingCase != ''">closing_case = #{closingCase},</if>
+            <if test="actionCode != null  and actionCode != ''">action_code = #{actionCode},</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">address_registered = #{addressRegistered},</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">cd_id_bef = #{cdIdBef},</if>
+            <if test="areaNumber != null  and areaNumber != ''">area_number = #{areaNumber},</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">implement_institution_code = #{implementInstitutionCode},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="cdSource != null  and cdSource != ''">cd_source = #{cdSource},</if>
+            <if test="actionName != null  and actionName != ''">action_name = #{actionName},</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">administrative_cp_ce_type = #{administrativeCpCeType},</if>
+            <if test="cdId != null  and cdId != ''">cd_id = #{cdId},</if>
+            <if test="addressOperating != null  and addressOperating != ''">address_operating = #{addressOperating},</if>
+            <if test="startDate != null  and startDate != ''">start_date = #{startDate},</if>
+            <if test="lyType != null  and lyType != ''">ly_type = #{lyType},</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">submitted_personnel = #{submittedPersonnel},</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">administrative_cp_na = #{administrativeCpNa},</if>
+            <if test="superviseMeasure != null  and superviseMeasure != ''">supervise_measure = #{superviseMeasure},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="checkBehaviorNumber != null  and checkBehaviorNumber != ''">check_behavior_number = #{checkBehaviorNumber},</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">record_unique_identity = #{recordUniqueIdentity},</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">administrative_cp_ui_code = #{administrativeCpUiCode},</if>
+            <if test="superviseObject != null  and superviseObject != ''">supervise_object = #{superviseObject},</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''">entrust_dept_code = #{entrustDeptCode},</if>
+            <if test="cdOperation != null  and cdOperation != ''">cd_operation = #{cdOperation},</if>
+            <if test="cdBatch != null  and cdBatch != ''">cd_batch = #{cdBatch},</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">implement_institution = #{implementInstitution},</if>
+            <if test="itemSource != null  and itemSource != ''">item_source = #{itemSource},</if>
+            <if test="cdTime != null">cd_time = #{cdTime},</if>
+            <if test="entrustDept != null  and entrustDept != ''">entrust_dept = #{entrustDept},</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''">supervise_item_code = #{superviseItemCode},</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">administrative_cp = #{administrativeCp},</if>
+            <if test="cdLsh != null  and cdLsh != ''">cd_lsh = #{cdLsh},</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">cd_lsh_src = #{cdLshSrc},</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">cd_hb_source = #{cdHbSource},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJgJgxwOtherActionById" parameterType="Long">
+        delete from jg_jgxw_other_action where id = #{id}
+    </delete>
+
+    <delete id="deleteJgJgxwOtherActionByIds" parameterType="String">
+        delete from jg_jgxw_other_action where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <resultMap type="JgJgxwPunishAction" id="JgJgxwPunishActionResult">
+        <result property="id"    column="id"    />
+        <result property="submittedDate"    column="submitted_date"    />
+        <result property="administrativeReconsider"    column="administrative_reconsider"    />
+        <result property="casesClosedExecutionResult"    column="cases_closed_execution_result"    />
+        <result property="otherDisposals"    column="other_disposals"    />
+        <result property="fine"    column="fine"    />
+        <result property="ifHearingWitnesses"    column="if_hearing_witnesses"    />
+        <result property="cdId"    column="cd_id"    />
+        <result property="caseInvolvingPunishment"    column="case_involving_punishment"    />
+        <result property="lyType"    column="ly_type"    />
+        <result property="administrativeCpNa"    column="administrative_cp_na"    />
+        <result property="punishActionCode"    column="punish_action_code"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="recordUniqueIdentity"    column="record_unique_identity"    />
+        <result property="superviseObject"    column="supervise_object"    />
+        <result property="discussCollectively"    column="discuss_collectively"    />
+        <result property="entrustDeptCode"    column="entrust_dept_code"    />
+        <result property="groupDiscussionConclusion"    column="group_discussion_conclusion"    />
+        <result property="implementInstitution"    column="implement_institution"    />
+        <result property="legalReviewOpinions"    column="legal_review_opinions"    />
+        <result property="administrativePenalties"    column="administrative_penalties"    />
+        <result property="setDate"    column="set_date"    />
+        <result property="casesClosedExecutionWay"    column="cases_closed_execution_way"    />
+        <result property="superviseItemCode"    column="supervise_item_code"    />
+        <result property="punishProcedure"    column="punish_procedure"    />
+        <result property="administrativeAction"    column="administrative_action"    />
+        <result property="majorCase"    column="major_case"    />
+        <result property="groupDiscussionDate"    column="group_discussion_date"    />
+        <result property="casesClosedFine"    column="cases_closed_fine"    />
+        <result property="punishActionName"    column="punish_action_name"    />
+        <result property="checkActionCode"    column="check_action_code"    />
+        <result property="addressRegistered"    column="address_registered"    />
+        <result property="illegalFact"    column="illegal_fact"    />
+        <result property="cdIdBef"    column="cd_id_bef"    />
+        <result property="areaNumber"    column="area_number"    />
+        <result property="implementInstitutionCode"    column="implement_institution_code"    />
+        <result property="casesClosedExecution"    column="cases_closed_execution"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="caseSource"    column="case_source"    />
+        <result property="punishType"    column="punish_type"    />
+        <result property="cdSource"    column="cd_source"    />
+        <result property="administrativeCpCeType"    column="administrative_cp_ce_type"    />
+        <result property="punishAccord"    column="punish_accord"    />
+        <result property="addressOperating"    column="address_operating"    />
+        <result property="punishDocumentCode"    column="punish_document_code"    />
+        <result property="submittedPersonnel"    column="submitted_personnel"    />
+        <result property="filingDate"    column="filing_date"    />
+        <result property="administrativeCpUiCode"    column="administrative_cp_ui_code"    />
+        <result property="cdOperation"    column="cd_operation"    />
+        <result property="legalReviewDate"    column="legal_review_date"    />
+        <result property="cdBatch"    column="cd_batch"    />
+        <result property="penaltyResult"    column="penalty_result"    />
+        <result property="cdTime"    column="cd_time"    />
+        <result property="entrustDept"    column="entrust_dept"    />
+        <result property="legalReview"    column="legal_review"    />
+        <result property="administrativeCp"    column="administrative_cp"    />
+        <result property="deportationDate"    column="deportation_date"    />
+        <result property="cdLsh"    column="cd_lsh"    />
+        <result property="cdLshSrc"    column="cd_lsh_src"    />
+        <result property="cdHbSource"    column="CD_HB_SOURCE"    />
+    </resultMap>
+
+    <sql id="selectJgJgxwPunishActionVo">
+        select id, submitted_date, administrative_reconsider, cases_closed_execution_result, other_disposals, fine, if_hearing_witnesses, cd_id, case_involving_punishment, ly_type, administrative_cp_na, punish_action_code, create_time, record_unique_identity, supervise_object, discuss_collectively, entrust_dept_code, group_discussion_conclusion, implement_institution, legal_review_opinions, administrative_penalties, set_date, cases_closed_execution_way, supervise_item_code, punish_procedure, administrative_action, major_case, group_discussion_date, cases_closed_fine, punish_action_name, check_action_code, address_registered, illegal_fact, cd_id_bef, area_number, implement_institution_code, cases_closed_execution, update_time, case_source, punish_type, cd_source, administrative_cp_ce_type, punish_accord, address_operating, punish_document_code, submitted_personnel, filing_date, administrative_cp_ui_code, cd_operation, legal_review_date, cd_batch, penalty_result, cd_time, entrust_dept, legal_review, administrative_cp, deportation_date, cd_lsh, cd_lsh_src, cd_hb_source from jg_jgxw_punish_action
+    </sql>
+
+    <select id="selectJgJgxwPunishActionList" parameterType="JgJgxwPunishAction" resultMap="JgJgxwPunishActionResult">
+        <include refid="selectJgJgxwPunishActionVo"/>
+        <where>
+            <if test="submittedDate != null  and submittedDate != ''"> and submitted_date = #{submittedDate}</if>
+            <if test="administrativeReconsider != null  and administrativeReconsider != ''"> and administrative_reconsider = #{administrativeReconsider}</if>
+            <if test="casesClosedExecutionResult != null  and casesClosedExecutionResult != ''"> and cases_closed_execution_result = #{casesClosedExecutionResult}</if>
+            <if test="otherDisposals != null  and otherDisposals != ''"> and other_disposals = #{otherDisposals}</if>
+            <if test="fine != null  and fine != ''"> and fine = #{fine}</if>
+            <if test="ifHearingWitnesses != null  and ifHearingWitnesses != ''"> and if_hearing_witnesses = #{ifHearingWitnesses}</if>
+            <if test="cdId != null  and cdId != ''"> and cd_id = #{cdId}</if>
+            <if test="caseInvolvingPunishment != null  and caseInvolvingPunishment != ''"> and case_involving_punishment = #{caseInvolvingPunishment}</if>
+            <if test="lyType != null  and lyType != ''"> and ly_type = #{lyType}</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''"> and administrative_cp_na = #{administrativeCpNa}</if>
+            <if test="punishActionCode != null  and punishActionCode != ''"> and punish_action_code = #{punishActionCode}</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''"> and record_unique_identity = #{recordUniqueIdentity}</if>
+            <if test="superviseObject != null  and superviseObject != ''"> and supervise_object = #{superviseObject}</if>
+            <if test="discussCollectively != null  and discussCollectively != ''"> and discuss_collectively = #{discussCollectively}</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''"> and entrust_dept_code = #{entrustDeptCode}</if>
+            <if test="groupDiscussionConclusion != null  and groupDiscussionConclusion != ''"> and group_discussion_conclusion = #{groupDiscussionConclusion}</if>
+            <if test="implementInstitution != null  and implementInstitution != ''"> and implement_institution = #{implementInstitution}</if>
+            <if test="legalReviewOpinions != null  and legalReviewOpinions != ''"> and legal_review_opinions = #{legalReviewOpinions}</if>
+            <if test="administrativePenalties != null  and administrativePenalties != ''"> and administrative_penalties = #{administrativePenalties}</if>
+            <if test="setDate != null  and setDate != ''"> and set_date = #{setDate}</if>
+            <if test="casesClosedExecutionWay != null  and casesClosedExecutionWay != ''"> and cases_closed_execution_way = #{casesClosedExecutionWay}</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''"> and supervise_item_code = #{superviseItemCode}</if>
+            <if test="punishProcedure != null  and punishProcedure != ''"> and punish_procedure = #{punishProcedure}</if>
+            <if test="administrativeAction != null  and administrativeAction != ''"> and administrative_action = #{administrativeAction}</if>
+            <if test="majorCase != null  and majorCase != ''"> and major_case = #{majorCase}</if>
+            <if test="groupDiscussionDate != null  and groupDiscussionDate != ''"> and group_discussion_date = #{groupDiscussionDate}</if>
+            <if test="casesClosedFine != null  and casesClosedFine != ''"> and cases_closed_fine = #{casesClosedFine}</if>
+            <if test="punishActionName != null  and punishActionName != ''"> and punish_action_name like concat('%', #{punishActionName}, '%')</if>
+            <if test="checkActionCode != null  and checkActionCode != ''"> and check_action_code = #{checkActionCode}</if>
+            <if test="addressRegistered != null  and addressRegistered != ''"> and address_registered = #{addressRegistered}</if>
+            <if test="illegalFact != null  and illegalFact != ''"> and illegal_fact = #{illegalFact}</if>
+            <if test="cdIdBef != null  and cdIdBef != ''"> and cd_id_bef = #{cdIdBef}</if>
+            <if test="areaNumber != null  and areaNumber != ''"> and area_number = #{areaNumber}</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''"> and implement_institution_code = #{implementInstitutionCode}</if>
+            <if test="casesClosedExecution != null  and casesClosedExecution != ''"> and cases_closed_execution = #{casesClosedExecution}</if>
+            <if test="caseSource != null  and caseSource != ''"> and case_source = #{caseSource}</if>
+            <if test="punishType != null  and punishType != ''"> and punish_type = #{punishType}</if>
+            <if test="cdSource != null  and cdSource != ''"> and cd_source = #{cdSource}</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''"> and administrative_cp_ce_type = #{administrativeCpCeType}</if>
+            <if test="punishAccord != null  and punishAccord != ''"> and punish_accord = #{punishAccord}</if>
+            <if test="addressOperating != null  and addressOperating != ''"> and address_operating = #{addressOperating}</if>
+            <if test="punishDocumentCode != null  and punishDocumentCode != ''"> and punish_document_code = #{punishDocumentCode}</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''"> and submitted_personnel = #{submittedPersonnel}</if>
+            <if test="filingDate != null  and filingDate != ''"> and filing_date = #{filingDate}</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''"> and administrative_cp_ui_code = #{administrativeCpUiCode}</if>
+            <if test="cdOperation != null  and cdOperation != ''"> and cd_operation = #{cdOperation}</if>
+            <if test="legalReviewDate != null  and legalReviewDate != ''"> and legal_review_date = #{legalReviewDate}</if>
+            <if test="cdBatch != null  and cdBatch != ''"> and cd_batch = #{cdBatch}</if>
+            <if test="penaltyResult != null  and penaltyResult != ''"> and penalty_result = #{penaltyResult}</if>
+            <if test="cdTime != null"> and cd_time = #{cdTime}</if>
+            <if test="entrustDept != null  and entrustDept != ''"> and entrust_dept = #{entrustDept}</if>
+            <if test="legalReview != null  and legalReview != ''"> and legal_review = #{legalReview}</if>
+            <if test="administrativeCp != null  and administrativeCp != ''"> and administrative_cp = #{administrativeCp}</if>
+            <if test="deportationDate != null  and deportationDate != ''"> and deportation_date = #{deportationDate}</if>
+            <if test="cdLsh != null  and cdLsh != ''"> and cd_lsh = #{cdLsh}</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''"> and cd_lsh_src = #{cdLshSrc}</if>
+            <if test="cdHbSource != null  and cdHbSource != ''"> and cd_hb_source = #{cdHbSource}</if>
+        </where>
+    </select>
+
+    <select id="selectJgJgxwPunishActionById" parameterType="String" resultMap="JgJgxwPunishActionResult">
+        <include refid="selectJgJgxwPunishActionVo"/>
+        where submitted_date = #{submittedDate}
+    </select>
+
+    <insert id="insertJgJgxwPunishAction" parameterType="JgJgxwPunishAction">
+        insert into jg_jgxw_punish_action
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="submittedDate != null  and submittedDate != ''">submitted_date,</if>
+            <if test="administrativeReconsider != null  and administrativeReconsider != ''">administrative_reconsider,</if>
+            <if test="casesClosedExecutionResult != null  and casesClosedExecutionResult != ''">cases_closed_execution_result,</if>
+            <if test="otherDisposals != null  and otherDisposals != ''">other_disposals,</if>
+            <if test="fine != null  and fine != ''">fine,</if>
+            <if test="ifHearingWitnesses != null  and ifHearingWitnesses != ''">if_hearing_witnesses,</if>
+            <if test="cdId != null  and cdId != ''">cd_id,</if>
+            <if test="caseInvolvingPunishment != null  and caseInvolvingPunishment != ''">case_involving_punishment,</if>
+            <if test="lyType != null  and lyType != ''">ly_type,</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">administrative_cp_na,</if>
+            <if test="punishActionCode != null  and punishActionCode != ''">punish_action_code,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">record_unique_identity,</if>
+            <if test="superviseObject != null  and superviseObject != ''">supervise_object,</if>
+            <if test="discussCollectively != null  and discussCollectively != ''">discuss_collectively,</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''">entrust_dept_code,</if>
+            <if test="groupDiscussionConclusion != null  and groupDiscussionConclusion != ''">group_discussion_conclusion,</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">implement_institution,</if>
+            <if test="legalReviewOpinions != null  and legalReviewOpinions != ''">legal_review_opinions,</if>
+            <if test="administrativePenalties != null  and administrativePenalties != ''">administrative_penalties,</if>
+            <if test="setDate != null  and setDate != ''">set_date,</if>
+            <if test="casesClosedExecutionWay != null  and casesClosedExecutionWay != ''">cases_closed_execution_way,</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''">supervise_item_code,</if>
+            <if test="punishProcedure != null  and punishProcedure != ''">punish_procedure,</if>
+            <if test="administrativeAction != null  and administrativeAction != ''">administrative_action,</if>
+            <if test="majorCase != null  and majorCase != ''">major_case,</if>
+            <if test="groupDiscussionDate != null  and groupDiscussionDate != ''">group_discussion_date,</if>
+            <if test="casesClosedFine != null  and casesClosedFine != ''">cases_closed_fine,</if>
+            <if test="punishActionName != null  and punishActionName != ''">punish_action_name,</if>
+            <if test="checkActionCode != null  and checkActionCode != ''">check_action_code,</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">address_registered,</if>
+            <if test="illegalFact != null  and illegalFact != ''">illegal_fact,</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">cd_id_bef,</if>
+            <if test="areaNumber != null  and areaNumber != ''">area_number,</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">implement_institution_code,</if>
+            <if test="casesClosedExecution != null  and casesClosedExecution != ''">cases_closed_execution,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="caseSource != null  and caseSource != ''">case_source,</if>
+            <if test="punishType != null  and punishType != ''">punish_type,</if>
+            <if test="cdSource != null  and cdSource != ''">cd_source,</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">administrative_cp_ce_type,</if>
+            <if test="punishAccord != null  and punishAccord != ''">punish_accord,</if>
+            <if test="addressOperating != null  and addressOperating != ''">address_operating,</if>
+            <if test="punishDocumentCode != null  and punishDocumentCode != ''">punish_document_code,</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">submitted_personnel,</if>
+            <if test="filingDate != null  and filingDate != ''">filing_date,</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">administrative_cp_ui_code,</if>
+            <if test="cdOperation != null  and cdOperation != ''">cd_operation,</if>
+            <if test="legalReviewDate != null  and legalReviewDate != ''">legal_review_date,</if>
+            <if test="cdBatch != null  and cdBatch != ''">cd_batch,</if>
+            <if test="penaltyResult != null  and penaltyResult != ''">penalty_result,</if>
+            <if test="cdTime != null">cd_time,</if>
+            <if test="entrustDept != null  and entrustDept != ''">entrust_dept,</if>
+            <if test="legalReview != null  and legalReview != ''">legal_review,</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">administrative_cp,</if>
+            <if test="deportationDate != null  and deportationDate != ''">deportation_date,</if>
+            <if test="cdLsh != null  and cdLsh != ''">cd_lsh,</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">cd_lsh_src,</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">cd_hb_source,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="submittedDate != null  and submittedDate != ''">#{submittedDate},</if>
+            <if test="administrativeReconsider != null  and administrativeReconsider != ''">#{administrativeReconsider},</if>
+            <if test="casesClosedExecutionResult != null  and casesClosedExecutionResult != ''">#{casesClosedExecutionResult},</if>
+            <if test="otherDisposals != null  and otherDisposals != ''">#{otherDisposals},</if>
+            <if test="fine != null  and fine != ''">#{fine},</if>
+            <if test="ifHearingWitnesses != null  and ifHearingWitnesses != ''">#{ifHearingWitnesses},</if>
+            <if test="cdId != null  and cdId != ''">#{cdId},</if>
+            <if test="caseInvolvingPunishment != null  and caseInvolvingPunishment != ''">#{caseInvolvingPunishment},</if>
+            <if test="lyType != null  and lyType != ''">#{lyType},</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">#{administrativeCpNa},</if>
+            <if test="punishActionCode != null  and punishActionCode != ''">#{punishActionCode},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">#{recordUniqueIdentity},</if>
+            <if test="superviseObject != null  and superviseObject != ''">#{superviseObject},</if>
+            <if test="discussCollectively != null  and discussCollectively != ''">#{discussCollectively},</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''">#{entrustDeptCode},</if>
+            <if test="groupDiscussionConclusion != null  and groupDiscussionConclusion != ''">#{groupDiscussionConclusion},</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">#{implementInstitution},</if>
+            <if test="legalReviewOpinions != null  and legalReviewOpinions != ''">#{legalReviewOpinions},</if>
+            <if test="administrativePenalties != null  and administrativePenalties != ''">#{administrativePenalties},</if>
+            <if test="setDate != null  and setDate != ''">#{setDate},</if>
+            <if test="casesClosedExecutionWay != null  and casesClosedExecutionWay != ''">#{casesClosedExecutionWay},</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''">#{superviseItemCode},</if>
+            <if test="punishProcedure != null  and punishProcedure != ''">#{punishProcedure},</if>
+            <if test="administrativeAction != null  and administrativeAction != ''">#{administrativeAction},</if>
+            <if test="majorCase != null  and majorCase != ''">#{majorCase},</if>
+            <if test="groupDiscussionDate != null  and groupDiscussionDate != ''">#{groupDiscussionDate},</if>
+            <if test="casesClosedFine != null  and casesClosedFine != ''">#{casesClosedFine},</if>
+            <if test="punishActionName != null  and punishActionName != ''">#{punishActionName},</if>
+            <if test="checkActionCode != null  and checkActionCode != ''">#{checkActionCode},</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">#{addressRegistered},</if>
+            <if test="illegalFact != null  and illegalFact != ''">#{illegalFact},</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">#{cdIdBef},</if>
+            <if test="areaNumber != null  and areaNumber != ''">#{areaNumber},</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">#{implementInstitutionCode},</if>
+            <if test="casesClosedExecution != null  and casesClosedExecution != ''">#{casesClosedExecution},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="caseSource != null  and caseSource != ''">#{caseSource},</if>
+            <if test="punishType != null  and punishType != ''">#{punishType},</if>
+            <if test="cdSource != null  and cdSource != ''">#{cdSource},</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">#{administrativeCpCeType},</if>
+            <if test="punishAccord != null  and punishAccord != ''">#{punishAccord},</if>
+            <if test="addressOperating != null  and addressOperating != ''">#{addressOperating},</if>
+            <if test="punishDocumentCode != null  and punishDocumentCode != ''">#{punishDocumentCode},</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">#{submittedPersonnel},</if>
+            <if test="filingDate != null  and filingDate != ''">#{filingDate},</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">#{administrativeCpUiCode},</if>
+            <if test="cdOperation != null  and cdOperation != ''">#{cdOperation},</if>
+            <if test="legalReviewDate != null  and legalReviewDate != ''">#{legalReviewDate},</if>
+            <if test="cdBatch != null  and cdBatch != ''">#{cdBatch},</if>
+            <if test="penaltyResult != null  and penaltyResult != ''">#{penaltyResult},</if>
+            <if test="cdTime != null">#{cdTime},</if>
+            <if test="entrustDept != null  and entrustDept != ''">#{entrustDept},</if>
+            <if test="legalReview != null  and legalReview != ''">#{legalReview},</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">#{administrativeCp},</if>
+            <if test="deportationDate != null  and deportationDate != ''">#{deportationDate},</if>
+            <if test="cdLsh != null  and cdLsh != ''">#{cdLsh},</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">#{cdLshSrc},</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">#{cdHbSource},</if>
+        </trim>
+    </insert>
+
+    <update id="updateJgJgxwPunishAction" parameterType="JgJgxwPunishAction">
+        update jg_jgxw_punish_action
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="administrativeReconsider != null  and administrativeReconsider != ''">administrative_reconsider = #{administrativeReconsider},</if>
+            <if test="casesClosedExecutionResult != null  and casesClosedExecutionResult != ''">cases_closed_execution_result = #{casesClosedExecutionResult},</if>
+            <if test="otherDisposals != null  and otherDisposals != ''">other_disposals = #{otherDisposals},</if>
+            <if test="fine != null  and fine != ''">fine = #{fine},</if>
+            <if test="ifHearingWitnesses != null  and ifHearingWitnesses != ''">if_hearing_witnesses = #{ifHearingWitnesses},</if>
+            <if test="cdId != null  and cdId != ''">cd_id = #{cdId},</if>
+            <if test="caseInvolvingPunishment != null  and caseInvolvingPunishment != ''">case_involving_punishment = #{caseInvolvingPunishment},</if>
+            <if test="lyType != null  and lyType != ''">ly_type = #{lyType},</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">administrative_cp_na = #{administrativeCpNa},</if>
+            <if test="punishActionCode != null  and punishActionCode != ''">punish_action_code = #{punishActionCode},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">record_unique_identity = #{recordUniqueIdentity},</if>
+            <if test="superviseObject != null  and superviseObject != ''">supervise_object = #{superviseObject},</if>
+            <if test="discussCollectively != null  and discussCollectively != ''">discuss_collectively = #{discussCollectively},</if>
+            <if test="entrustDeptCode != null  and entrustDeptCode != ''">entrust_dept_code = #{entrustDeptCode},</if>
+            <if test="groupDiscussionConclusion != null  and groupDiscussionConclusion != ''">group_discussion_conclusion = #{groupDiscussionConclusion},</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">implement_institution = #{implementInstitution},</if>
+            <if test="legalReviewOpinions != null  and legalReviewOpinions != ''">legal_review_opinions = #{legalReviewOpinions},</if>
+            <if test="administrativePenalties != null  and administrativePenalties != ''">administrative_penalties = #{administrativePenalties},</if>
+            <if test="setDate != null  and setDate != ''">set_date = #{setDate},</if>
+            <if test="casesClosedExecutionWay != null  and casesClosedExecutionWay != ''">cases_closed_execution_way = #{casesClosedExecutionWay},</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''">supervise_item_code = #{superviseItemCode},</if>
+            <if test="punishProcedure != null  and punishProcedure != ''">punish_procedure = #{punishProcedure},</if>
+            <if test="administrativeAction != null  and administrativeAction != ''">administrative_action = #{administrativeAction},</if>
+            <if test="majorCase != null  and majorCase != ''">major_case = #{majorCase},</if>
+            <if test="groupDiscussionDate != null  and groupDiscussionDate != ''">group_discussion_date = #{groupDiscussionDate},</if>
+            <if test="casesClosedFine != null  and casesClosedFine != ''">cases_closed_fine = #{casesClosedFine},</if>
+            <if test="punishActionName != null  and punishActionName != ''">punish_action_name = #{punishActionName},</if>
+            <if test="checkActionCode != null  and checkActionCode != ''">check_action_code = #{checkActionCode},</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">address_registered = #{addressRegistered},</if>
+            <if test="illegalFact != null  and illegalFact != ''">illegal_fact = #{illegalFact},</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">cd_id_bef = #{cdIdBef},</if>
+            <if test="areaNumber != null  and areaNumber != ''">area_number = #{areaNumber},</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">implement_institution_code = #{implementInstitutionCode},</if>
+            <if test="casesClosedExecution != null  and casesClosedExecution != ''">cases_closed_execution = #{casesClosedExecution},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="caseSource != null  and caseSource != ''">case_source = #{caseSource},</if>
+            <if test="punishType != null  and punishType != ''">punish_type = #{punishType},</if>
+            <if test="cdSource != null  and cdSource != ''">cd_source = #{cdSource},</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">administrative_cp_ce_type = #{administrativeCpCeType},</if>
+            <if test="punishAccord != null  and punishAccord != ''">punish_accord = #{punishAccord},</if>
+            <if test="addressOperating != null  and addressOperating != ''">address_operating = #{addressOperating},</if>
+            <if test="punishDocumentCode != null  and punishDocumentCode != ''">punish_document_code = #{punishDocumentCode},</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">submitted_personnel = #{submittedPersonnel},</if>
+            <if test="filingDate != null  and filingDate != ''">filing_date = #{filingDate},</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">administrative_cp_ui_code = #{administrativeCpUiCode},</if>
+            <if test="cdOperation != null  and cdOperation != ''">cd_operation = #{cdOperation},</if>
+            <if test="legalReviewDate != null  and legalReviewDate != ''">legal_review_date = #{legalReviewDate},</if>
+            <if test="cdBatch != null  and cdBatch != ''">cd_batch = #{cdBatch},</if>
+            <if test="penaltyResult != null  and penaltyResult != ''">penalty_result = #{penaltyResult},</if>
+            <if test="cdTime != null">cd_time = #{cdTime},</if>
+            <if test="entrustDept != null  and entrustDept != ''">entrust_dept = #{entrustDept},</if>
+            <if test="legalReview != null  and legalReview != ''">legal_review = #{legalReview},</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">administrative_cp = #{administrativeCp},</if>
+            <if test="deportationDate != null  and deportationDate != ''">deportation_date = #{deportationDate},</if>
+            <if test="cdLsh != null  and cdLsh != ''">cd_lsh = #{cdLsh},</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">cd_lsh_src = #{cdLshSrc},</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">cd_hb_source = #{cdHbSource},</if>
+        </trim>
+        where submitted_date = #{submittedDate}
+    </update>
+
+    <delete id="deleteJgJgxwPunishActionById" parameterType="String">
+        delete from jg_jgxw_punish_action where submitted_date = #{submittedDate}
+    </delete>
+
+    <delete id="deleteJgJgxwPunishActionByIds" parameterType="String">
+        delete from jg_jgxw_punish_action where submitted_date in
+        <foreach item="submittedDate" collection="array" open="(" separator="," close=")">
+            #{submittedDate}
+        </foreach>
+    </delete>
+
+    <resultMap type="JgJgxwForceAction" id="JgJgxwForceActionResult">
+        <result property="id"    column="id"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="submittedDate"    column="submitted_date"    />
+        <result property="forceExecutionType"    column="force_execution_type"    />
+        <result property="forceType"    column="force_type"    />
+        <result property="checkActionCode"    column="check_action_code"    />
+        <result property="forceActionName"    column="force_action_name"    />
+        <result property="addressRegistered"    column="address_registered"    />
+        <result property="illegalFact"    column="illegal_fact"    />
+        <result property="cdIdBef"    column="cd_id_bef"    />
+        <result property="areaNumber"    column="area_number"    />
+        <result property="implementInstitutionCode"    column="implement_institution_code"    />
+        <result property="mandatoryBasis"    column="mandatory_basis"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="cdSource"    column="cd_source"    />
+        <result property="administrativeCpCeType"    column="administrative_cp_ce_type"    />
+        <result property="cdId"    column="cd_id"    />
+        <result property="coerciveMeasureType"    column="coercive_measure_type"    />
+        <result property="forceExtendDate"    column="force_extend_date"    />
+        <result property="addressOperating"    column="address_operating"    />
+        <result property="lyType"    column="ly_type"    />
+        <result property="submittedPersonnel"    column="submitted_personnel"    />
+        <result property="administrativeCpNa"    column="administrative_cp_na"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="forceActionCode"    column="force_action_code"    />
+        <result property="recordUniqueIdentity"    column="record_unique_identity"    />
+        <result property="administrativeCpUiCode"    column="administrative_cp_ui_code"    />
+        <result property="superviseObject"    column="supervise_object"    />
+        <result property="cdOperation"    column="cd_operation"    />
+        <result property="cdBatch"    column="cd_batch"    />
+        <result property="implementInstitution"    column="implement_institution"    />
+        <result property="mandatoryDecisionPatify"    column="mandatory_decision_patify"    />
+        <result property="cdTime"    column="cd_time"    />
+        <result property="mandatoryDecisionNumber"    column="mandatory_decision_number"    />
+        <result property="superviseItemCode"    column="supervise_item_code"    />
+        <result property="mandatoryDecisionSevDate"    column="mandatory_decision_sev_date"    />
+        <result property="administrativeCp"    column="administrative_cp"    />
+        <result property="cdLsh"    column="cd_lsh"    />
+        <result property="cdLshSrc"    column="cd_lsh_src"    />
+        <result property="cdHbSource"    column="cd_hb_source"    />
+    </resultMap>
+
+    <sql id="selectJgJgxwForceActionVo">
+        select id, end_date, submitted_date, force_execution_type, force_type, check_action_code, force_action_name, address_registered, illegal_fact, cd_id_bef, area_number, implement_institution_code, mandatory_basis, update_time, cd_source, administrative_cp_ce_type, cd_id, coercive_measure_type, force_extend_date, address_operating, ly_type, submitted_personnel, administrative_cp_na, create_time, force_action_code, record_unique_identity, administrative_cp_ui_code, supervise_object, cd_operation, cd_batch, implement_institution, mandatory_decision_patify, cd_time, mandatory_decision_number, supervise_item_code, mandatory_decision_sev_date, administrative_cp, cd_lsh, cd_lsh_src, cd_hb_source from jg_jgxw_force_action
+    </sql>
+
+    <select id="selectJgJgxwForceActionList" parameterType="JgJgxwForceAction" resultMap="JgJgxwForceActionResult">
+        <include refid="selectJgJgxwForceActionVo"/>
+        <where>
+            <if test="endDate != null "> and end_date = #{endDate}</if>
+            <if test="submittedDate != null "> and submitted_date = #{submittedDate}</if>
+            <if test="forceExecutionType != null  and forceExecutionType != ''"> and force_execution_type = #{forceExecutionType}</if>
+            <if test="forceType != null  and forceType != ''"> and force_type = #{forceType}</if>
+            <if test="checkActionCode != null  and checkActionCode != ''"> and check_action_code = #{checkActionCode}</if>
+            <if test="forceActionName != null  and forceActionName != ''"> and force_action_name like concat('%', #{forceActionName}, '%')</if>
+            <if test="addressRegistered != null  and addressRegistered != ''"> and address_registered = #{addressRegistered}</if>
+            <if test="illegalFact != null  and illegalFact != ''"> and illegal_fact = #{illegalFact}</if>
+            <if test="cdIdBef != null  and cdIdBef != ''"> and cd_id_bef = #{cdIdBef}</if>
+            <if test="areaNumber != null  and areaNumber != ''"> and area_number = #{areaNumber}</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''"> and implement_institution_code = #{implementInstitutionCode}</if>
+            <if test="mandatoryBasis != null  and mandatoryBasis != ''"> and mandatory_basis = #{mandatoryBasis}</if>
+            <if test="cdSource != null  and cdSource != ''"> and cd_source = #{cdSource}</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''"> and administrative_cp_ce_type = #{administrativeCpCeType}</if>
+            <if test="cdId != null  and cdId != ''"> and cd_id = #{cdId}</if>
+            <if test="coerciveMeasureType != null  and coerciveMeasureType != ''"> and coercive_measure_type = #{coerciveMeasureType}</if>
+            <if test="forceExtendDate != null  and forceExtendDate != ''"> and force_extend_date = #{forceExtendDate}</if>
+            <if test="addressOperating != null  and addressOperating != ''"> and address_operating = #{addressOperating}</if>
+            <if test="lyType != null  and lyType != ''"> and ly_type = #{lyType}</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''"> and submitted_personnel = #{submittedPersonnel}</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''"> and administrative_cp_na = #{administrativeCpNa}</if>
+            <if test="forceActionCode != null  and forceActionCode != ''"> and force_action_code = #{forceActionCode}</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''"> and record_unique_identity = #{recordUniqueIdentity}</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''"> and administrative_cp_ui_code = #{administrativeCpUiCode}</if>
+            <if test="superviseObject != null  and superviseObject != ''"> and supervise_object = #{superviseObject}</if>
+            <if test="cdOperation != null  and cdOperation != ''"> and cd_operation = #{cdOperation}</if>
+            <if test="cdBatch != null  and cdBatch != ''"> and cd_batch = #{cdBatch}</if>
+            <if test="implementInstitution != null  and implementInstitution != ''"> and implement_institution = #{implementInstitution}</if>
+            <if test="mandatoryDecisionPatify != null  and mandatoryDecisionPatify != ''"> and mandatory_decision_patify = #{mandatoryDecisionPatify}</if>
+            <if test="cdTime != null "> and cd_time = #{cdTime}</if>
+            <if test="mandatoryDecisionNumber != null  and mandatoryDecisionNumber != ''"> and mandatory_decision_number = #{mandatoryDecisionNumber}</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''"> and supervise_item_code = #{superviseItemCode}</if>
+            <if test="mandatoryDecisionSevDate != null "> and mandatory_decision_sev_date = #{mandatoryDecisionSevDate}</if>
+            <if test="administrativeCp != null  and administrativeCp != ''"> and administrative_cp = #{administrativeCp}</if>
+            <if test="cdLsh != null  and cdLsh != ''"> and cd_lsh = #{cdLsh}</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''"> and cd_lsh_src = #{cdLshSrc}</if>
+            <if test="cdHbSource != null  and cdHbSource != ''"> and cd_hb_source = #{cdHbSource}</if>
+        </where>
+    </select>
+
+    <select id="selectJgJgxwForceActionById" parameterType="Long" resultMap="JgJgxwForceActionResult">
+        <include refid="selectJgJgxwForceActionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertJgJgxwForceAction" parameterType="JgJgxwForceAction" useGeneratedKeys="true" keyProperty="id">
+        insert into jg_jgxw_force_action
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="endDate != null ">end_date,</if>
+            <if test="submittedDate != null ">submitted_date,</if>
+            <if test="forceExecutionType != null  and forceExecutionType != ''">force_execution_type,</if>
+            <if test="forceType != null  and forceType != ''">force_type,</if>
+            <if test="checkActionCode != null  and checkActionCode != ''">check_action_code,</if>
+            <if test="forceActionName != null  and forceActionName != ''">force_action_name,</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">address_registered,</if>
+            <if test="illegalFact != null  and illegalFact != ''">illegal_fact,</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">cd_id_bef,</if>
+            <if test="areaNumber != null  and areaNumber != ''">area_number,</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">implement_institution_code,</if>
+            <if test="mandatoryBasis != null  and mandatoryBasis != ''">mandatory_basis,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="cdSource != null  and cdSource != ''">cd_source,</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">administrative_cp_ce_type,</if>
+            <if test="cdId != null  and cdId != ''">cd_id,</if>
+            <if test="coerciveMeasureType != null  and coerciveMeasureType != ''">coercive_measure_type,</if>
+            <if test="forceExtendDate != null  and forceExtendDate != ''">force_extend_date,</if>
+            <if test="addressOperating != null  and addressOperating != ''">address_operating,</if>
+            <if test="lyType != null  and lyType != ''">ly_type,</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">submitted_personnel,</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">administrative_cp_na,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="forceActionCode != null  and forceActionCode != ''">force_action_code,</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">record_unique_identity,</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">administrative_cp_ui_code,</if>
+            <if test="superviseObject != null  and superviseObject != ''">supervise_object,</if>
+            <if test="cdOperation != null  and cdOperation != ''">cd_operation,</if>
+            <if test="cdBatch != null  and cdBatch != ''">cd_batch,</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">implement_institution,</if>
+            <if test="mandatoryDecisionPatify != null  and mandatoryDecisionPatify != ''">mandatory_decision_patify,</if>
+            <if test="cdTime != null ">cd_time,</if>
+            <if test="mandatoryDecisionNumber != null  and mandatoryDecisionNumber != ''">mandatory_decision_number,</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''">supervise_item_code,</if>
+            <if test="mandatoryDecisionSevDate != null ">mandatory_decision_sev_date,</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">administrative_cp,</if>
+            <if test="cdLsh != null  and cdLsh != ''">cd_lsh,</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">cd_lsh_src,</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">cd_hb_source,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="endDate != null ">#{endDate},</if>
+            <if test="submittedDate != null ">#{submittedDate},</if>
+            <if test="forceExecutionType != null  and forceExecutionType != ''">#{forceExecutionType},</if>
+            <if test="forceType != null  and forceType != ''">#{forceType},</if>
+            <if test="checkActionCode != null  and checkActionCode != ''">#{checkActionCode},</if>
+            <if test="forceActionName != null  and forceActionName != ''">#{forceActionName},</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">#{addressRegistered},</if>
+            <if test="illegalFact != null  and illegalFact != ''">#{illegalFact},</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">#{cdIdBef},</if>
+            <if test="areaNumber != null  and areaNumber != ''">#{areaNumber},</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">#{implementInstitutionCode},</if>
+            <if test="mandatoryBasis != null  and mandatoryBasis != ''">#{mandatoryBasis},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="cdSource != null  and cdSource != ''">#{cdSource},</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">#{administrativeCpCeType},</if>
+            <if test="cdId != null  and cdId != ''">#{cdId},</if>
+            <if test="coerciveMeasureType != null  and coerciveMeasureType != ''">#{coerciveMeasureType},</if>
+            <if test="forceExtendDate != null  and forceExtendDate != ''">#{forceExtendDate},</if>
+            <if test="addressOperating != null  and addressOperating != ''">#{addressOperating},</if>
+            <if test="lyType != null  and lyType != ''">#{lyType},</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">#{submittedPersonnel},</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">#{administrativeCpNa},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="forceActionCode != null  and forceActionCode != ''">#{forceActionCode},</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">#{recordUniqueIdentity},</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">#{administrativeCpUiCode},</if>
+            <if test="superviseObject != null  and superviseObject != ''">#{superviseObject},</if>
+            <if test="cdOperation != null  and cdOperation != ''">#{cdOperation},</if>
+            <if test="cdBatch != null  and cdBatch != ''">#{cdBatch},</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">#{implementInstitution},</if>
+            <if test="mandatoryDecisionPatify != null  and mandatoryDecisionPatify != ''">#{mandatoryDecisionPatify},</if>
+            <if test="cdTime != null ">#{cdTime},</if>
+            <if test="mandatoryDecisionNumber != null  and mandatoryDecisionNumber != ''">#{mandatoryDecisionNumber},</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''">#{superviseItemCode},</if>
+            <if test="mandatoryDecisionSevDate != null ">#{mandatoryDecisionSevDate},</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">#{administrativeCp},</if>
+            <if test="cdLsh != null  and cdLsh != ''">#{cdLsh},</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">#{cdLshSrc},</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">#{cdHbSource},</if>
+        </trim>
+    </insert>
+
+    <update id="updateJgJgxwForceAction" parameterType="JgJgxwForceAction">
+        update jg_jgxw_force_action
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="endDate != null ">end_date = #{endDate},</if>
+            <if test="submittedDate != null ">submitted_date = #{submittedDate},</if>
+            <if test="forceExecutionType != null  and forceExecutionType != ''">force_execution_type = #{forceExecutionType},</if>
+            <if test="forceType != null  and forceType != ''">force_type = #{forceType},</if>
+            <if test="checkActionCode != null  and checkActionCode != ''">check_action_code = #{checkActionCode},</if>
+            <if test="forceActionName != null  and forceActionName != ''">force_action_name = #{forceActionName},</if>
+            <if test="addressRegistered != null  and addressRegistered != ''">address_registered = #{addressRegistered},</if>
+            <if test="illegalFact != null  and illegalFact != ''">illegal_fact = #{illegalFact},</if>
+            <if test="cdIdBef != null  and cdIdBef != ''">cd_id_bef = #{cdIdBef},</if>
+            <if test="areaNumber != null  and areaNumber != ''">area_number = #{areaNumber},</if>
+            <if test="implementInstitutionCode != null  and implementInstitutionCode != ''">implement_institution_code = #{implementInstitutionCode},</if>
+            <if test="mandatoryBasis != null  and mandatoryBasis != ''">mandatory_basis = #{mandatoryBasis},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="cdSource != null  and cdSource != ''">cd_source = #{cdSource},</if>
+            <if test="administrativeCpCeType != null  and administrativeCpCeType != ''">administrative_cp_ce_type = #{administrativeCpCeType},</if>
+            <if test="cdId != null  and cdId != ''">cd_id = #{cdId},</if>
+            <if test="coerciveMeasureType != null  and coerciveMeasureType != ''">coercive_measure_type = #{coerciveMeasureType},</if>
+            <if test="forceExtendDate != null  and forceExtendDate != ''">force_extend_date = #{forceExtendDate},</if>
+            <if test="addressOperating != null  and addressOperating != ''">address_operating = #{addressOperating},</if>
+            <if test="lyType != null  and lyType != ''">ly_type = #{lyType},</if>
+            <if test="submittedPersonnel != null  and submittedPersonnel != ''">submitted_personnel = #{submittedPersonnel},</if>
+            <if test="administrativeCpNa != null  and administrativeCpNa != ''">administrative_cp_na = #{administrativeCpNa},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="forceActionCode != null  and forceActionCode != ''">force_action_code = #{forceActionCode},</if>
+            <if test="recordUniqueIdentity != null  and recordUniqueIdentity != ''">record_unique_identity = #{recordUniqueIdentity},</if>
+            <if test="administrativeCpUiCode != null  and administrativeCpUiCode != ''">administrative_cp_ui_code = #{administrativeCpUiCode},</if>
+            <if test="superviseObject != null  and superviseObject != ''">supervise_object = #{superviseObject},</if>
+            <if test="cdOperation != null  and cdOperation != ''">cd_operation = #{cdOperation},</if>
+            <if test="cdBatch != null  and cdBatch != ''">cd_batch = #{cdBatch},</if>
+            <if test="implementInstitution != null  and implementInstitution != ''">implement_institution = #{implementInstitution},</if>
+            <if test="mandatoryDecisionPatify != null  and mandatoryDecisionPatify != ''">mandatory_decision_patify = #{mandatoryDecisionPatify},</if>
+            <if test="cdTime != null ">cd_time = #{cdTime},</if>
+            <if test="mandatoryDecisionNumber != null  and mandatoryDecisionNumber != ''">mandatory_decision_number = #{mandatoryDecisionNumber},</if>
+            <if test="superviseItemCode != null  and superviseItemCode != ''">supervise_item_code = #{superviseItemCode},</if>
+            <if test="mandatoryDecisionSevDate != null ">mandatory_decision_sev_date = #{mandatoryDecisionSevDate},</if>
+            <if test="administrativeCp != null  and administrativeCp != ''">administrative_cp = #{administrativeCp},</if>
+            <if test="cdLsh != null  and cdLsh != ''">cd_lsh = #{cdLsh},</if>
+            <if test="cdLshSrc != null  and cdLshSrc != ''">cd_lsh_src = #{cdLshSrc},</if>
+            <if test="cdHbSource != null  and cdHbSource != ''">cd_hb_source = #{cdHbSource},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJgJgxwForceActionById" parameterType="Long">
+        delete from jg_jgxw_force_action where id = #{id}
+    </delete>
+
+    <delete id="deleteJgJgxwForceActionByIds" parameterType="String">
+        delete from jg_jgxw_force_action where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

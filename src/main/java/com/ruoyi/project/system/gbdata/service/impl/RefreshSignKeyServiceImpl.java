@@ -1,11 +1,15 @@
-package com.ruoyi.project.system.gbdata.service;
+package com.ruoyi.project.system.gbdata.service.impl;
 
 import com.ruoyi.common.constant.GbDataConstants;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.gbdata.GenerateSign;
 import com.ruoyi.common.utils.gbdata.GetAppKeyUtils;
 import com.ruoyi.project.system.gbdata.domain.DataDictionary;
+import com.ruoyi.project.system.gbdata.service.DataDictionaryService;
+import com.ruoyi.project.system.gbdata.service.IRefreshSignKeyService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +17,12 @@ import org.springframework.stereotype.Service;
  * Created by issuser on 2019/11/14.
  */
 @Service
-public class RefreshSignKeyService {
-
+public class RefreshSignKeyServiceImpl implements IRefreshSignKeyService{
+    private static final Logger logger = LoggerFactory.getLogger(RefreshSignKeyServiceImpl.class);
     @Autowired
     DataDictionaryService dataDictionaryService;
+
+    @Override
     public void refreshSignKey(){
         String signKey = GetAppKeyUtils.getappkey(GbDataConstants.REFRESH_SECRET_URL, GbDataConstants.GJGXJHPT_SID_VAL,
                 GbDataConstants.GJGXJHPT_RID_VAL, GbDataConstants.GJGXJHPT_APP_KEY);
@@ -33,6 +39,7 @@ public class RefreshSignKeyService {
      * 获取最新的key
      * @return
      */
+    @Override
     public String getSignKey(){
         return getDataDictionaryByKey(GbDataConstants.GJGXJHPT_SIGN).getDvalue();
     }
@@ -42,6 +49,7 @@ public class RefreshSignKeyService {
      * @Seealso refreshSignKey()
      * @return
      */
+    @Override
     public String getSignSecret(){
         return getDataDictionaryByKey(GbDataConstants.GJGXJHPT_SIGN_SECRET).getDvalue();
     }
@@ -50,6 +58,7 @@ public class RefreshSignKeyService {
      * 获取和密钥配套的时间戳
      * @return
      */
+    @Override
     public String getGjgxjhptRtime(){
         return getDataDictionaryByKey(GbDataConstants.GJGXJHPT_RTIME).getDvalue();
     }
@@ -57,6 +66,7 @@ public class RefreshSignKeyService {
      * 获取国办数据下发起始日期
      * @return
      */
+    @Override
     public String getGbDataStartDate(){
         DataDictionary dataDictionary = getDataDictionaryByKey(GbDataConstants.GB_DATA_START_DATE);
         return dataDictionary.getDvalue();
@@ -66,6 +76,7 @@ public class RefreshSignKeyService {
      * 获取最近一次拉取数据日期
      * @return
      */
+    @Override
     public String getGbDataLastPullDate(String tableId){
         String key = String.format(GbDataConstants.GB_DATA_UPDATE_DATE_FORMATTER, tableId);
         DataDictionary dataDictionary = getDataDictionaryByKey(key);
@@ -76,6 +87,7 @@ public class RefreshSignKeyService {
      * 更新最后一次拉取数据的日期
      * @param tableId
      */
+    @Override
     public void updateDateLastPullDate(String tableId, String dateStr){
         String dictKey = String.format(GbDataConstants.GB_DATA_UPDATE_DATE_FORMATTER, tableId);
         if(StringUtils.isEmpty(dateStr)){
@@ -85,10 +97,12 @@ public class RefreshSignKeyService {
         dataDictionaryService.updateDataDictionary(dictKey, dateStr, nowDateTime);
     }
 
+    @Override
     public DataDictionary getDataDictionaryByKey(String key){
         return dataDictionaryService.getDataDictionaryByKey(key);
     }
 
+    @Override
     public void refreshDataDictionary(){
         dataDictionaryService.setDataDictionaryMap();
     }

@@ -1,9 +1,12 @@
-package com.ruoyi.project.system.action.domain;
+package com.ruoyi.project.system.gbdata.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 【请填写功能名称】对象 jg_jgxw_punish_action
@@ -213,7 +216,8 @@ public class JgJgxwPunishAction extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String cdTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date cdTime;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
@@ -238,6 +242,9 @@ public class JgJgxwPunishAction extends BaseEntity
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String cdLshSrc;
+
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String cdHbSource;
 
     public void setSubmittedDate(String submittedDate) 
     {
@@ -680,12 +687,12 @@ public class JgJgxwPunishAction extends BaseEntity
     {
         return penaltyResult;
     }
-    public void setCdTime(String cdTime) 
+    public void setCdTime(Date cdTime)
     {
         this.cdTime = cdTime;
     }
 
-    public String getCdTime() 
+    public Date getCdTime()
     {
         return cdTime;
     }
@@ -742,6 +749,14 @@ public class JgJgxwPunishAction extends BaseEntity
     public String getCdLshSrc() 
     {
         return cdLshSrc;
+    }
+
+    public String getCdHbSource() {
+        return cdHbSource;
+    }
+
+    public void setCdHbSource(String cdHbSource) {
+        this.cdHbSource = cdHbSource;
     }
 
     @Override

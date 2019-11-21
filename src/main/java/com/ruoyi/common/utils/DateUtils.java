@@ -152,4 +152,24 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         // long sec = diff % nd % nh % nm / ns;
         return day + "天" + hour + "小时" + min + "分钟";
     }
+
+    public static boolean before(Date before, Date later){
+        if(before.before(later)){
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean before(String before, String later){
+        Date dateBefore = DateUtils.parseDate(before);
+        Date dateLater = DateUtils.parseDate(later);
+        return before(dateBefore, dateLater);
+    }
+
+    public static String addOneDay(String dateStr){
+        Date date = DateUtils.parseDate(dateStr);
+        Date addDate = addDays(date, 1);
+        String addDateStr = parseDateToStr(YYYY_MM_DD, addDate);
+        return addDateStr;
+    }
 }

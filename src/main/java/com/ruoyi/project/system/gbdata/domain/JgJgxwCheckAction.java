@@ -1,9 +1,12 @@
-package com.ruoyi.project.system.action.domain;
+package com.ruoyi.project.system.gbdata.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 【请填写功能名称】对象 jg_jgxw_check_action
@@ -140,7 +143,8 @@ public class JgJgxwCheckAction extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String cdTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date cdTime;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
@@ -161,6 +165,9 @@ public class JgJgxwCheckAction extends BaseEntity
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String cdLshSrc;
+
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String cdHbSource;
 
     public void setId(Long id) 
     {
@@ -441,12 +448,12 @@ public class JgJgxwCheckAction extends BaseEntity
     {
         return implementInstitution;
     }
-    public void setCdTime(String cdTime) 
+    public void setCdTime(Date cdTime)
     {
         this.cdTime = cdTime;
     }
 
-    public String getCdTime() 
+    public Date getCdTime()
     {
         return cdTime;
     }
@@ -496,6 +503,14 @@ public class JgJgxwCheckAction extends BaseEntity
         return cdLshSrc;
     }
 
+    public String getCdHbSource() {
+        return cdHbSource;
+    }
+
+    public void setCdHbSource(String cdHbSource) {
+        this.cdHbSource = cdHbSource;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -538,6 +553,7 @@ public class JgJgxwCheckAction extends BaseEntity
             .append("planId", getPlanId())
             .append("cdLsh", getCdLsh())
             .append("cdLshSrc", getCdLshSrc())
+            .append("cdHbSource", getCdHbSource())
             .toString();
     }
 }

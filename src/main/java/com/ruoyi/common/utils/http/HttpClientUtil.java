@@ -1,10 +1,11 @@
-package com.cloud.icenter.countryserviceproxy.utils;
+package com.ruoyi.common.utils.http;
 /**
  * http请求调用
  *
  * @author issuser
  */
 
+import org.apache.http.Header;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -153,6 +154,11 @@ public class HttpClientUtil {
             while (keyIt.hasNext()) {
                 String key = keyIt.next();
                 httpGet.addHeader(key, header.get(key));
+            }
+            log.info("request url: " + httpGet.toString());
+            log.info("with header: ");
+            for(Header head: httpGet.getAllHeaders()){
+                log.info("  -- -- " + head.getName() + " : " + head.getValue());
             }
             // 发起请求
             response = httpClient.execute(httpGet);

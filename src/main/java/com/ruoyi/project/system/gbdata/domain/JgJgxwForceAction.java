@@ -1,15 +1,16 @@
-package com.ruoyi.project.system.action.domain;
+package com.ruoyi.project.system.gbdata.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
+import java.util.Date;
 
 /**
  * 【请填写功能名称】对象 jg_jgxw_force_action
  * 
  * @author ruoyi
- * @date 2019-11-18
+ * @date 2019-11-20
  */
 public class JgJgxwForceAction extends BaseEntity
 {
@@ -20,7 +21,19 @@ public class JgJgxwForceAction extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String submittedDate;
+    private Date endDate;
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private Date submittedDate;
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String forceExecutionType;
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String forceType;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
@@ -28,11 +41,15 @@ public class JgJgxwForceAction extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String forceActionName;
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String addressRegistered;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String checkType;
+    private String illegalFact;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
@@ -44,27 +61,15 @@ public class JgJgxwForceAction extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String checkPersonnelCode;
-
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String checkForm;
-
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String implementInstitutionCode;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String checkResult;
+    private String mandatoryBasis;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String cdSource;
-
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String checkDate;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
@@ -76,7 +81,11 @@ public class JgJgxwForceAction extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String superviseItemImplementCode;
+    private String coerciveMeasureType;
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String forceExtendDate;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
@@ -88,10 +97,6 @@ public class JgJgxwForceAction extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String checkActionName;
-
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String submittedPersonnel;
 
     /** $column.columnComment */
@@ -100,7 +105,7 @@ public class JgJgxwForceAction extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String checkPersonnel;
+    private String forceActionCode;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
@@ -116,14 +121,6 @@ public class JgJgxwForceAction extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String entrustDeptCode;
-
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String checkMode;
-
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String cdOperation;
 
     /** $column.columnComment */
@@ -132,27 +129,31 @@ public class JgJgxwForceAction extends BaseEntity
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String superviseItemCheckIcode;
-
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String implementInstitution;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String cdTime;
+    private String mandatoryDecisionPatify;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String entrustDept;
+    private Date cdTime;
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String mandatoryDecisionNumber;
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String superviseItemCode;
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private Date mandatoryDecisionSevDate;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String administrativeCp;
-
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String planId;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
@@ -161,6 +162,10 @@ public class JgJgxwForceAction extends BaseEntity
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String cdLshSrc;
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String cdHbSource;
 
     public void setId(Long id) 
     {
@@ -171,14 +176,41 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return id;
     }
-    public void setSubmittedDate(String submittedDate) 
+    public void setEndDate(Date endDate) 
+    {
+        this.endDate = endDate;
+    }
+
+    public Date getEndDate() 
+    {
+        return endDate;
+    }
+    public void setSubmittedDate(Date submittedDate) 
     {
         this.submittedDate = submittedDate;
     }
 
-    public String getSubmittedDate() 
+    public Date getSubmittedDate() 
     {
         return submittedDate;
+    }
+    public void setForceExecutionType(String forceExecutionType) 
+    {
+        this.forceExecutionType = forceExecutionType;
+    }
+
+    public String getForceExecutionType() 
+    {
+        return forceExecutionType;
+    }
+    public void setForceType(String forceType) 
+    {
+        this.forceType = forceType;
+    }
+
+    public String getForceType() 
+    {
+        return forceType;
     }
     public void setCheckActionCode(String checkActionCode) 
     {
@@ -189,6 +221,15 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return checkActionCode;
     }
+    public void setForceActionName(String forceActionName) 
+    {
+        this.forceActionName = forceActionName;
+    }
+
+    public String getForceActionName() 
+    {
+        return forceActionName;
+    }
     public void setAddressRegistered(String addressRegistered) 
     {
         this.addressRegistered = addressRegistered;
@@ -198,14 +239,14 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return addressRegistered;
     }
-    public void setCheckType(String checkType) 
+    public void setIllegalFact(String illegalFact) 
     {
-        this.checkType = checkType;
+        this.illegalFact = illegalFact;
     }
 
-    public String getCheckType() 
+    public String getIllegalFact() 
     {
-        return checkType;
+        return illegalFact;
     }
     public void setCdIdBef(String cdIdBef) 
     {
@@ -225,24 +266,6 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return areaNumber;
     }
-    public void setCheckPersonnelCode(String checkPersonnelCode) 
-    {
-        this.checkPersonnelCode = checkPersonnelCode;
-    }
-
-    public String getCheckPersonnelCode() 
-    {
-        return checkPersonnelCode;
-    }
-    public void setCheckForm(String checkForm) 
-    {
-        this.checkForm = checkForm;
-    }
-
-    public String getCheckForm() 
-    {
-        return checkForm;
-    }
     public void setImplementInstitutionCode(String implementInstitutionCode) 
     {
         this.implementInstitutionCode = implementInstitutionCode;
@@ -252,14 +275,14 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return implementInstitutionCode;
     }
-    public void setCheckResult(String checkResult) 
+    public void setMandatoryBasis(String mandatoryBasis) 
     {
-        this.checkResult = checkResult;
+        this.mandatoryBasis = mandatoryBasis;
     }
 
-    public String getCheckResult() 
+    public String getMandatoryBasis() 
     {
-        return checkResult;
+        return mandatoryBasis;
     }
     public void setCdSource(String cdSource) 
     {
@@ -269,15 +292,6 @@ public class JgJgxwForceAction extends BaseEntity
     public String getCdSource() 
     {
         return cdSource;
-    }
-    public void setCheckDate(String checkDate) 
-    {
-        this.checkDate = checkDate;
-    }
-
-    public String getCheckDate() 
-    {
-        return checkDate;
     }
     public void setAdministrativeCpCeType(String administrativeCpCeType) 
     {
@@ -297,14 +311,23 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return cdId;
     }
-    public void setSuperviseItemImplementCode(String superviseItemImplementCode) 
+    public void setCoerciveMeasureType(String coerciveMeasureType) 
     {
-        this.superviseItemImplementCode = superviseItemImplementCode;
+        this.coerciveMeasureType = coerciveMeasureType;
     }
 
-    public String getSuperviseItemImplementCode() 
+    public String getCoerciveMeasureType() 
     {
-        return superviseItemImplementCode;
+        return coerciveMeasureType;
+    }
+    public void setForceExtendDate(String forceExtendDate) 
+    {
+        this.forceExtendDate = forceExtendDate;
+    }
+
+    public String getForceExtendDate() 
+    {
+        return forceExtendDate;
     }
     public void setAddressOperating(String addressOperating) 
     {
@@ -324,15 +347,6 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return lyType;
     }
-    public void setCheckActionName(String checkActionName) 
-    {
-        this.checkActionName = checkActionName;
-    }
-
-    public String getCheckActionName() 
-    {
-        return checkActionName;
-    }
     public void setSubmittedPersonnel(String submittedPersonnel) 
     {
         this.submittedPersonnel = submittedPersonnel;
@@ -351,14 +365,14 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return administrativeCpNa;
     }
-    public void setCheckPersonnel(String checkPersonnel) 
+    public void setForceActionCode(String forceActionCode) 
     {
-        this.checkPersonnel = checkPersonnel;
+        this.forceActionCode = forceActionCode;
     }
 
-    public String getCheckPersonnel() 
+    public String getForceActionCode() 
     {
-        return checkPersonnel;
+        return forceActionCode;
     }
     public void setRecordUniqueIdentity(String recordUniqueIdentity) 
     {
@@ -387,24 +401,6 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return superviseObject;
     }
-    public void setEntrustDeptCode(String entrustDeptCode) 
-    {
-        this.entrustDeptCode = entrustDeptCode;
-    }
-
-    public String getEntrustDeptCode() 
-    {
-        return entrustDeptCode;
-    }
-    public void setCheckMode(String checkMode) 
-    {
-        this.checkMode = checkMode;
-    }
-
-    public String getCheckMode() 
-    {
-        return checkMode;
-    }
     public void setCdOperation(String cdOperation) 
     {
         this.cdOperation = cdOperation;
@@ -423,15 +419,6 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return cdBatch;
     }
-    public void setSuperviseItemCheckIcode(String superviseItemCheckIcode) 
-    {
-        this.superviseItemCheckIcode = superviseItemCheckIcode;
-    }
-
-    public String getSuperviseItemCheckIcode() 
-    {
-        return superviseItemCheckIcode;
-    }
     public void setImplementInstitution(String implementInstitution) 
     {
         this.implementInstitution = implementInstitution;
@@ -441,23 +428,50 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return implementInstitution;
     }
-    public void setCdTime(String cdTime) 
+    public void setMandatoryDecisionPatify(String mandatoryDecisionPatify) 
+    {
+        this.mandatoryDecisionPatify = mandatoryDecisionPatify;
+    }
+
+    public String getMandatoryDecisionPatify() 
+    {
+        return mandatoryDecisionPatify;
+    }
+    public void setCdTime(Date cdTime) 
     {
         this.cdTime = cdTime;
     }
 
-    public String getCdTime() 
+    public Date getCdTime() 
     {
         return cdTime;
     }
-    public void setEntrustDept(String entrustDept) 
+    public void setMandatoryDecisionNumber(String mandatoryDecisionNumber) 
     {
-        this.entrustDept = entrustDept;
+        this.mandatoryDecisionNumber = mandatoryDecisionNumber;
     }
 
-    public String getEntrustDept() 
+    public String getMandatoryDecisionNumber() 
     {
-        return entrustDept;
+        return mandatoryDecisionNumber;
+    }
+    public void setSuperviseItemCode(String superviseItemCode) 
+    {
+        this.superviseItemCode = superviseItemCode;
+    }
+
+    public String getSuperviseItemCode() 
+    {
+        return superviseItemCode;
+    }
+    public void setMandatoryDecisionSevDate(Date mandatoryDecisionSevDate) 
+    {
+        this.mandatoryDecisionSevDate = mandatoryDecisionSevDate;
+    }
+
+    public Date getMandatoryDecisionSevDate() 
+    {
+        return mandatoryDecisionSevDate;
     }
     public void setAdministrativeCp(String administrativeCp) 
     {
@@ -467,15 +481,6 @@ public class JgJgxwForceAction extends BaseEntity
     public String getAdministrativeCp() 
     {
         return administrativeCp;
-    }
-    public void setPlanId(String planId) 
-    {
-        this.planId = planId;
-    }
-
-    public String getPlanId() 
-    {
-        return planId;
     }
     public void setCdLsh(String cdLsh) 
     {
@@ -495,49 +500,59 @@ public class JgJgxwForceAction extends BaseEntity
     {
         return cdLshSrc;
     }
+    public void setCdHbSource(String cdHbSource) 
+    {
+        this.cdHbSource = cdHbSource;
+    }
+
+    public String getCdHbSource() 
+    {
+        return cdHbSource;
+    }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("endDate", getEndDate())
             .append("submittedDate", getSubmittedDate())
+            .append("forceExecutionType", getForceExecutionType())
+            .append("forceType", getForceType())
             .append("checkActionCode", getCheckActionCode())
+            .append("forceActionName", getForceActionName())
             .append("addressRegistered", getAddressRegistered())
-            .append("checkType", getCheckType())
+            .append("illegalFact", getIllegalFact())
             .append("cdIdBef", getCdIdBef())
             .append("areaNumber", getAreaNumber())
-            .append("checkPersonnelCode", getCheckPersonnelCode())
-            .append("checkForm", getCheckForm())
             .append("implementInstitutionCode", getImplementInstitutionCode())
+            .append("mandatoryBasis", getMandatoryBasis())
             .append("updateTime", getUpdateTime())
-            .append("checkResult", getCheckResult())
             .append("cdSource", getCdSource())
-            .append("checkDate", getCheckDate())
             .append("administrativeCpCeType", getAdministrativeCpCeType())
             .append("cdId", getCdId())
-            .append("superviseItemImplementCode", getSuperviseItemImplementCode())
+            .append("coerciveMeasureType", getCoerciveMeasureType())
+            .append("forceExtendDate", getForceExtendDate())
             .append("addressOperating", getAddressOperating())
             .append("lyType", getLyType())
-            .append("checkActionName", getCheckActionName())
             .append("submittedPersonnel", getSubmittedPersonnel())
             .append("administrativeCpNa", getAdministrativeCpNa())
-            .append("checkPersonnel", getCheckPersonnel())
             .append("createTime", getCreateTime())
+            .append("forceActionCode", getForceActionCode())
             .append("recordUniqueIdentity", getRecordUniqueIdentity())
             .append("administrativeCpUiCode", getAdministrativeCpUiCode())
             .append("superviseObject", getSuperviseObject())
-            .append("entrustDeptCode", getEntrustDeptCode())
-            .append("checkMode", getCheckMode())
             .append("cdOperation", getCdOperation())
             .append("cdBatch", getCdBatch())
-            .append("superviseItemCheckIcode", getSuperviseItemCheckIcode())
             .append("implementInstitution", getImplementInstitution())
+            .append("mandatoryDecisionPatify", getMandatoryDecisionPatify())
             .append("cdTime", getCdTime())
-            .append("entrustDept", getEntrustDept())
+            .append("mandatoryDecisionNumber", getMandatoryDecisionNumber())
+            .append("superviseItemCode", getSuperviseItemCode())
+            .append("mandatoryDecisionSevDate", getMandatoryDecisionSevDate())
             .append("administrativeCp", getAdministrativeCp())
-            .append("planId", getPlanId())
             .append("cdLsh", getCdLsh())
             .append("cdLshSrc", getCdLshSrc())
+            .append("cdHbSource", getCdHbSource())
             .toString();
     }
 }
