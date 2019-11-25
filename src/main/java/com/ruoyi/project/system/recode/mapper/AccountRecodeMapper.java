@@ -28,6 +28,23 @@ public interface AccountRecodeMapper
     public List<AccountRecode> selectAccountRecodeList(AccountRecode accountRecode);
 
     /**
+     * 查询统计数据存储列表（地市变化）
+     *
+     * @param accountRecode 统计数据存储
+     * @return 统计数据存储集合
+     */
+    public List<AccountRecode> selectAccountRecodeListChangeDs(AccountRecode accountRecode);
+
+    /**
+     * 查询统计数据存储列表（省直变化）
+     *
+     * @param accountRecode 统计数据存储
+     * @return 统计数据存储集合
+     */
+    public List<AccountRecode> selectAccountRecodeListChangeSz(AccountRecode accountRecode);
+
+
+    /**
      * 新增统计数据存储
      * 
      * @param accountRecode 统计数据存储

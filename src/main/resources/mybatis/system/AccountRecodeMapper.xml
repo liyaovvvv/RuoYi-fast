@@ -29,12 +29,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="data != null  and data != ''"> and data = #{data}</if>
         </where>
     </select>
-    
+
+    <select id="selectAccountRecodeListChangeDs" parameterType="AccountRecode" resultMap="AccountRecodeResult">
+        <include refid="selectAccountRecodeVo"/>
+       where TYPE='0' ORDER BY create_time DESC LIMIT 2
+    </select>
+
+    <select id="selectAccountRecodeListChangeSz" parameterType="AccountRecode" resultMap="AccountRecodeResult">
+        <include refid="selectAccountRecodeVo"/>
+        where TYPE='3' ORDER BY create_time DESC LIMIT 2
+    </select>
+
     <select id="selectAccountRecodeById" parameterType="Long" resultMap="AccountRecodeResult">
         <include refid="selectAccountRecodeVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertAccountRecode" parameterType="AccountRecode" useGeneratedKeys="true" keyProperty="id">
         insert into sys_account_recode
         <trim prefix="(" suffix=")" suffixOverrides=",">

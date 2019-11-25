@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('地市分类数据统计')" />
+    <th:block th:include="include :: layout-latest-css" />
+</head>
+<body class="gray-bg">
+<div class="ui-layout-center">
+    <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="search-form">
+                    <div class="select-list">
+                        <input type="hidden" name="type" value="0">
+                        <ul>
+                            <li>
+                                查询类型：<select name="remark" id="remark">
+                                <option value="history">历史记录</option>
+                                <option value="current">实时记录</option>
+                            </select>
+                            </li>
+                            <li class="select-time">
+                                <label>统计时间： </label>
+                                <input type="text" class="time-input" id="createTime" placeholder="选择时间" name="createTime"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12 select-table table-bordered">
+                <table id="bootstrap-table" data-mobile-responsive="true"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: layout-latest-js" />
+
+<script>
+    var prefix = ctx + "data";
+    var columns = [];
+    var options = {};
+
+    $(function() {
+        var panehHidden = false;
+        if ($(this).width() < 769) {
+            panehHidden = true;
+        }
+        $('body').layout({ initClosed: panehHidden, west__size: 185 });
+        getCityAccountColumns();
+    });
+
+    function getCityAccountColumns() {
+        $.ajax({
+            cache : true,
+            type : "GET",
+            url : ctx + "data/getDsTableGroupColumns",
+            data : {
+
+            },
+            async : true,
+            error : function(request) {
+                $.modal.alertError("系统错误");
+            },
+            success : function(result) {
+                columns = result;
+                queryUserList();
+            }
+        });
+    }
+
+    function queryUserList() {
+        options = {
+            url:ctx + "data/getDsTableGroupDataChange",
+            modalName: "统计信息",
+            columns: columns,
+            sortName:"",
+            sortOrder:"",
+            height:'800',
+            striped:true,
+            pagination:false,
+            fixedColumns:true,
+            fixedNumber:1,
+            exportTypes:['json', 'xml', 'csv', 'txt', 'sql', 'excel'],
+            showExport:true,
+            showToggle:false,
+            showRefresh:false,
+            showSearch:false,
+            exportOptions: {
+                fileName: '地市数据'
+            },
+            queryParams:{
+                remark:"history",//默认查询历史数据
+                type:0
+            }
+        };
+        $.table.init(options);
+    }
+
+</script>
+<style>
+    .button_position{
+        margin-top: 35%;
+        margin-left: 40%;
+    }
+</style>
+</body>
+</html>

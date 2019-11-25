@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -73,10 +74,23 @@ public class DataViewController extends BaseController {
         return prefix + "/dataTableGroupDs";
     }
 
+
+    @GetMapping("/dataTableGroupDsChange")
+    public String dataTableGroupDsChange()
+    {
+        return prefix + "/dataTableGroupDsChange";
+    }
+
     @GetMapping("/dataTableGroupSz")
     public String dataTableGroupSz()
     {
         return prefix + "/dataTableGroupSz";
+    }
+
+    @GetMapping("/dataTableGroupSzChange")
+    public String dataTableGroupSzChange()
+    {
+        return prefix + "/dataTableGroupSzChange";
     }
 
     @GetMapping("/dataQzView")
@@ -296,6 +310,87 @@ public class DataViewController extends BaseController {
         List<Map<String, Object>> list = dataViewService.getDsTableGroupData();
         return getDataTable(list);
     }
+
+    /**
+     * 获取地市表分类当日变化统计
+     * @param accountRecode
+     * @return
+     */
+    @PostMapping("/getDsTableGroupDataChange")
+    @ResponseBody
+    public TableDataInfo getDsTableGroupDataChange(AccountRecode accountRecode)
+    {
+            List<AccountRecode> recodes = accountRecodeService.selectAccountRecodeListChangeDs(accountRecode);
+            TableDataInfo tableDataInfo = new TableDataInfo();
+            if (recodes != null && recodes.size() == 2){
+                JSONArray listLast = JSONArray.parseArray(recodes.get(0).getData());
+                JSONArray listSecond = JSONArray.parseArray(recodes.get(1).getData());
+                JSONArray arrayChange =new JSONArray();
+                for(int i=0;i<listLast.size();i++){
+                    JSONObject list1 = listLast.getJSONObject(i);
+                    JSONObject list2 = listSecond.getJSONObject(i);
+                    JSONObject jsonObject = new JSONObject();
+                    Iterator<String> s = list1.keySet().iterator();
+                    while (s.hasNext()) {
+                      String  key = s.next();
+                      int tempChange =0;
+                      if( !key.contains("city")  ) {
+                          tempChange = Integer.valueOf(list1.get(key).toString()) - Integer.valueOf(list2.get(key).toString());
+                          System.out.println(tempChange);
+                          jsonObject.put(key,tempChange);
+                      }else{
+                          jsonObject.put(key,list1.get(key));
+                      }
+
+                    }
+                    arrayChange.add(jsonObject);
+                }
+                tableDataInfo = getDataTable(arrayChange);
+            }
+            return tableDataInfo;
+
+    }
+
+
+    /**
+     * 获取省直表分类统计
+     * @param accountRecode
+     * @return
+     */
+    @PostMapping("/getSzTableGroupDataChange")
+    @ResponseBody
+    public TableDataInfo getSzTableGroupDataChange(AccountRecode accountRecode)
+    {
+        List<AccountRecode> recodes = accountRecodeService.selectAccountRecodeListChangeSz(accountRecode);
+        TableDataInfo tableDataInfo = new TableDataInfo();
+        if (recodes != null && recodes.size() == 2){
+            JSONArray listLast = JSONArray.parseArray(recodes.get(0).getData());
+            JSONArray listSecond = JSONArray.parseArray(recodes.get(1).getData());
+            JSONArray arrayChange =new JSONArray();
+            for(int i=0;i<listLast.size();i++){
+                JSONObject list1 = listLast.getJSONObject(i);
+                JSONObject list2 = listSecond.getJSONObject(i);
+                JSONObject jsonObject = new JSONObject();
+                Iterator<String> s = list1.keySet().iterator();
+                while (s.hasNext()) {
+                    String  key = s.next();
+                    int tempChange =0;
+                    if( !key.contains("city")  ) {
+                        tempChange = Integer.valueOf(list1.get(key).toString()) - Integer.valueOf(list2.get(key).toString());
+                        System.out.println(tempChange);
+                        jsonObject.put(key,tempChange);
+                    }else{
+                        jsonObject.put(key,list1.get(key));
+                    }
+
+                }
+                arrayChange.add(jsonObject);
+            }
+            tableDataInfo = getDataTable(arrayChange);
+        }
+        return tableDataInfo;
+    }
+
 
     /**
      * 获取 监管事项覆盖率（标准库） 上报及时率

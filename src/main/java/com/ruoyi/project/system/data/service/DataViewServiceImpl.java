@@ -266,11 +266,31 @@ public class DataViewServiceImpl implements IDataViewService {
 
     @Override
     @Transient
+    public List<Map<String, Object>> getDsTableGroupDataChange(){
+        //查询前置库表
+        List<JSONObject> qzTableInfos = dataViewMapper.getDsTableInfos();
+        List<Map<String, Object>> array = dataProcessing(qzTableInfos,"ds_");
+       // deleteAndInsert(array,"地市合表统计",0L);
+        return array;
+    }
+
+    @Override
+    @Transient
     public List<Map<String, Object>> getJgTableGroupData(){
         //查询前置库表
         List<JSONObject> qzTableInfos = dataViewMapper.getDsTableInfos();
         List<Map<String, Object>> array = dataProcessing(qzTableInfos,"ds_");
         deleteAndInsert(array,"地市合表统计",0L);
+        return array;
+    }
+
+    @Override
+    @Transient
+    public List<Map<String, Object>> getSzTableGroupDataChange(){
+        //查询前置库表
+        List<JSONObject> qzTableInfos = dataViewMapper.getSzTableInfos();
+        List<Map<String, Object>> array = dataProcessing(qzTableInfos,"jg_");
+        deleteAndInsert(array,"省直合表统计",3L);
         return array;
     }
 

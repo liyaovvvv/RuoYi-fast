@@ -20,6 +20,10 @@ public interface IDataViewService
 
     List<Map<String, Object>> getDsTableGroupData();
 
+    List<Map<String, Object>> getDsTableGroupDataChange();
+
+    List<Map<String, Object>> getSzTableGroupDataChange();
+
     List<Map<String, Object>> getJgTableGroupData();
 
     JSONArray getDsTableGroupColumns();
